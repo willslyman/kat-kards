@@ -23,7 +23,6 @@ var opponent_score : int = 0
 
 func _ready() -> void:
 	main = get_parent()
-	deal_cards()
 
 func _process(_delta: float) -> void:
 	cursor.position = get_global_mouse_position()

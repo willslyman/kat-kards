@@ -6,3 +6,6 @@ func select() -> void:
 
 func deselect() -> void:
 	$AnimationPlayer.play("deselect")
+
+func set_texture(texture : Texture2D) -> void:
+	$Sprite2D.texture = texture

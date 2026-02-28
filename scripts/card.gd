@@ -1,6 +1,8 @@
 extends Area2D
 class_name Card
 
+@export var card_name = ""
+
 var arena : Arena
 var is_player : bool = false
 
@@ -11,6 +13,8 @@ var playing : bool = false
 func setup(a : Arena, ip : bool) -> void:
 	arena = a
 	is_player = ip
+	
+	base.set_texture(CardList.card_to_texture[card_name])
 
 func select() -> void:
 	if playing: return

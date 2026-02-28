@@ -11,5 +11,6 @@ func score() -> void:
 
 [node name="Plus1" type="Area2D"]
 script = SubResource("GDScript_lkyrt")
+card_name = "plus1"
 
 [node name="CardBase" parent="." instance=ExtResource("1_yur5o")]

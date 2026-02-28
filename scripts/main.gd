@@ -2,6 +2,12 @@ extends Node3D
 class_name Main
 
 @onready var cam_anim: AnimationPlayer = $Camera3D/AnimationPlayer
+@onready var arena: Arena = $Arena
+
+func _ready() -> void:
+	CardList.assign_textures()
+	
+	arena.deal_cards()
 
 func to_table() -> void:
 	cam_anim.play("to_table")
