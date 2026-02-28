@@ -12,6 +12,13 @@ var currently_hovered_card : Card = null
 
 var playing_hand : bool = false
 
+## Visual consts
+const hand_card_gap : int = 100
+const play_card_gap : int = 120
+
+## Game Stats
+var card_play_size : int = 3
+
 ## Player Stats
 var player_score : int = 0
 var player_hand_size : int = 5
@@ -19,7 +26,11 @@ var player_cards : Array[Card] = []
 @onready var player_card_holder: Node2D = $MyCards
 @onready var player_label: RichTextLabel = $UI/PlayerLabel
 
-var opponent_score : int = 0
+var current_cards_selected : int = 0
+
+## Opp Stats
+var opp_score : int = 0
+
 
 func _ready() -> void:
 	main = get_parent()
@@ -47,7 +58,7 @@ func deal_cards() -> void:
 	for i in player_hand_size:
 		var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
-		var card_pos : Vector2 = Vector2((100 * i) - (100 * (player_hand_size / 2.0)) + 50, 128)
+		var card_pos : Vector2 = Vector2((hand_card_gap * i) - (hand_card_gap * (player_hand_size / 2.0)) + 50, 128)
 		player_card_holder.add_child(c)
 		c.position = card_pos
 		c.setup(self, true)
@@ -82,36 +93,62 @@ func _play_hand() -> void:
 	selected_cards.reverse()
 	for i in selected_cards.size():
 		var card : Card = selected_cards[i]
-		var card_pos : Vector2 = Vector2((100 * i) - (100 * (selected_cards.size() / 2.0)) + 50, 0) + CENTER + Vector2(0,64)
+		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (selected_cards.size() / 2.0)) + 50, 0) + CENTER + Vector2(0,64)
 		
 		card.deselect_anim()
 		
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(card, "position", card_pos, 0.5)
 	
+	## Get opponent cards
+	var opp_selected_cards : Array[Card] = []
+	for i in card_play_size:
+		var card_name = CardList.card_list.keys().pick_random()
+		var c : Card = CardList.card_list[card_name].instantiate()
+		add_child(c)
+		c.position = Vector2(320,-128)
+		c.setup(self, false)
+		opp_selected_cards.append(c)
+	
 	await get_tree().create_timer(1.2, false).timeout 
 	
+	## Show opponent cards
+	for i in range(opp_selected_cards.size()):
+		var card : Card = opp_selected_cards[i]
+		var card_pos : Vector2 = Vector2(320 + (play_card_gap * i) - (play_card_gap * (card_play_size / 2.0)) + 50, 128)
+		#card.position = card_pos
+		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(card, "position", card_pos, 0.5)
+		
+	await get_tree().create_timer(1.0, false).timeout
+	
 	## Score cards
-	for card_type in CardList.card_list:
-		for i in selected_cards.size():
+	
+	for i in selected_cards.size():
+		for card_type in CardList.card_list:
 			if selected_cards[i].card_name == card_type:
 				var card : Card = selected_cards[i]
-				card.use()
-				card.score()
-				await get_tree().create_timer(0.2, false).timeout
-	#for i in selected_cards.size():
-	#	var card : Card = selected_cards[i]
-	#	card.score()
-	#	await get_tree().create_timer(0.2, false).timeout
+				await do_card(card)
+				
+	for i in opp_selected_cards.size():
+		for card_type in CardList.card_list:
+			if opp_selected_cards[i].card_name == card_type:
+				var card : Card = opp_selected_cards[i]
+				await do_card(card)
+
+func do_card(card : Card) -> void:
+	await card.use()
+	card.un_use()
+	await get_tree().create_timer(0.4, false).timeout
 
 func add_points(is_player : bool, amount : int) -> void:
 	if is_player:
 		player_score += amount
 	else:
-		opponent_score += amount
+		opp_score += amount
 
 func add_mult(is_player : bool, mlt : int) -> void:
 	if is_player:
 		player_score *= mlt
 	else:
-		opponent_score *= mlt
+		opp_score *= mlt
