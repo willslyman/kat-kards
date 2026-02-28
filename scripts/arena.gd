@@ -16,11 +16,9 @@ var currently_hovered_card : Card = null
 @onready var phs_label: RichTextLabel = $UI/HandScores/PlayerHandScore
 @onready var ohs_label: RichTextLabel = $UI/HandScores/OppHandScore
 @onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
-@onready var notepad: TextureRect = $Notepad
+@onready var notepad: Notepad = $Notepad
 @onready var notepad_butt_anim: AnimationPlayer = $NotepadButt/AnimationPlayer
-
 @onready var round_label: RichTextLabel = $UI/Round/RoundLabel
-
 
 ## Arena State Stuff
 var current_card_play_idx : int = -1
@@ -72,7 +70,7 @@ func _process(_delta: float) -> void:
 			possible_cards.append(area)
 	
 	# Select card with highest z index
-	if possible_cards.size() > 0:
+	if possible_cards.size() > 0 and not notepad.open:
 		currently_hovered_card = possible_cards[0]
 		for i in range(1, possible_cards.size(), 1):
 			var card = possible_cards[i]
