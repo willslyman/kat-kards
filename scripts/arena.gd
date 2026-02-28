@@ -104,6 +104,8 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 
 func deal_cards() -> void:
+	round_label.text = str(current_round) + "/" + str(current_max_rounds)
+	
 	opp_selecting_card = true
 	for i in player_hand_size:
 		# Skip if card exists
@@ -266,6 +268,14 @@ func _play_hand() -> void:
 	score_anim.play("show")
 	card_anim.play("show")
 	player_leads = !player_leads
+	
+	if player_leads:
+		$UI/Scores/PlayerStar.visible = true
+		$UI/Scores/OppStar.visible = false
+	else:
+		$UI/Scores/PlayerStar.visible = false
+		$UI/Scores/OppStar.visible = true
+	
 	await card_anim.animation_finished
 	
 	deal_cards()
@@ -332,7 +342,7 @@ func destroy_player_card() -> void:
 	var card_idxs = []
 	for i in range(player_selected_cards.size()):
 		card_idxs.append(i)
-	card_idxs.shuffle()
+	#card_idxs.shuffle()
 	for i in card_idxs:
 		if not player_selected_cards[i].destroyed:
 			player_selected_cards[i].destroy()
@@ -342,7 +352,7 @@ func destroy_opp_card() -> void:
 	var card_idxs = []
 	for i in range(opp_selected_cards.size()):
 		card_idxs.append(i)
-	card_idxs.shuffle()
+	#card_idxs.shuffle()
 	for i in card_idxs:
 		if not opp_selected_cards[i].destroyed:
 			opp_selected_cards[i].destroy()
