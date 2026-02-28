@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=33 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bfpm2xjyh0sui" path="res://textures/tournament_icons/opp2.png" id="11_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://cnlal2h28a70r" path="res://textures/tournament_icons/opp3.png" id="12_trceg"]
 [ext_resource type="Texture2D" uid="uid://s1k6ktrfeeka" path="res://textures/fan.png" id="14_a8y0u"]
+[ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="15_jkv2x"]
 
 [sub_resource type="Animation" id="Animation_tipki"]
 length = 0.001
@@ -234,6 +235,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TUI/Bios:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 488)]
+}
 
 [sub_resource type="Animation" id="Animation_trceg"]
 resource_name = "start_round"
@@ -328,10 +341,39 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TUI/Bios:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 488)]
+}
+
+[sub_resource type="Animation" id="Animation_jbj1t"]
+resource_name = "show_bios"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TUI/Bios:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0, 488), Vector2(0, 288)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
 _data = {
 &"RESET": SubResource("Animation_eb6dy"),
+&"show_bios": SubResource("Animation_jbj1t"),
 &"start_round": SubResource("Animation_trceg"),
 &"to_tournament": SubResource("Animation_ya4ey")
 }
@@ -523,6 +565,91 @@ layout_mode = 0
 offset_right = 640.0
 offset_bottom = 480.0
 texture = ExtResource("10_choun")
+
+[node name="Bios" type="Control" parent="Tournament/TUI"]
+anchors_preset = 0
+offset_top = 488.0
+offset_right = 640.0
+offset_bottom = 671.9999
+
+[node name="YouBio" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 8.0
+offset_right = 304.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("15_jkv2x")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave]Card Cat
+
+[font size=24](Can't play cards)"
+horizontal_alignment = 1
+
+[node name="OppBio1" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 8.0
+offset_right = 584.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("15_jkv2x")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave]Average Tony
+[font size=24]Loses Ties.
+
+Has also never played this game before."
+horizontal_alignment = 1
+
+[node name="OppBio2" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+visible = false
+layout_mode = 0
+offset_left = 312.0
+offset_top = 8.0
+offset_right = 584.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("15_jkv2x")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave]Plasm
+[font size=24]
+A ghost, or, at least that's what we think he is.
+
+Pretty okay at cards."
+horizontal_alignment = 1
+
+[node name="OppBio3" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+visible = false
+layout_mode = 0
+offset_left = 312.0
+offset_top = 8.0
+offset_right = 584.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("15_jkv2x")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave]The Ace of Spades
+[font size=24]
+The man behind the tournament.
+
+Good luck..."
+horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tournament"]
 libraries = {
