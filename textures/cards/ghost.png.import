@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjq04w1g5i6ux"
-path="res://.godot/imported/beam.png-3cf5e853876fd4c94c23ed8a42ba164d.ctex"
+uid="uid://bmjol6vl4j7l7"
+path="res://.godot/imported/ghost.png-dbba67d9b3bc70097b0f9c3946f7c7ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/beam.png"
-dest_files=["res://.godot/imported/beam.png-3cf5e853876fd4c94c23ed8a42ba164d.ctex"]
+source_file="res://textures/cards/ghost.png"
+dest_files=["res://.godot/imported/ghost.png-dbba67d9b3bc70097b0f9c3946f7c7ff.ctex"]
 
 [params]
 
