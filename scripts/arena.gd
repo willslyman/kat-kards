@@ -1,7 +1,10 @@
 extends Control
 class_name Arena
 
+var main : Main = null
 @onready var cursor: Area2D = $Cursor
+
+var CARD = load("res://scenes/cards/plus_1.tscn")
 
 const CENTER : Vector2 = Vector2(320, 240)
 var currently_hovered_card : Card = null
@@ -10,13 +13,16 @@ var currently_hovered_card : Card = null
 var playing_hand : bool = false
 
 ## Player Stats
+var player_score : int = 0
 var player_hand_size : int = 5
 var player_cards : Array[Card] = []
 @onready var player_card_holder: Node2D = $MyCards
-const CARD = preload("uid://ce855u7bi6ev1")
+@onready var player_label: RichTextLabel = $UI/PlayerLabel
 
+var opponent_score : int = 0
 
 func _ready() -> void:
+	main = get_parent()
 	deal_cards()
 
 func _process(_delta: float) -> void:
@@ -30,6 +36,9 @@ func _process(_delta: float) -> void:
 	
 	if currently_hovered_card:
 		pass
+	
+	## Set scores
+	player_label.text = str(player_score)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
@@ -50,12 +59,11 @@ func deal_cards() -> void:
 		player_cards.append(c)
 		
 		await tween.finished
-	
-	print(player_cards)
 
 func _play_hand() -> void:
 	if playing_hand: return
 	playing_hand = true
+	main.to_table()
 	
 	var selected_cards : Array[Card] = []
 	for i in range(player_cards.size() - 1, -1, -1):
@@ -71,6 +79,7 @@ func _play_hand() -> void:
 	card_anim.play("hide")
 	
 	## Move cards to center
+	selected_cards.reverse()
 	for i in selected_cards.size():
 		var card : Card = selected_cards[i]
 		var card_pos : Vector2 = Vector2((100 * i) - (100 * (selected_cards.size() / 2.0)) + 50, 0) + CENTER + Vector2(0,64)
@@ -79,6 +88,15 @@ func _play_hand() -> void:
 		
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(card, "position", card_pos, 0.5)
+	
+	## Score cards
+	for i in selected_cards.size():
+		var card : Card = selected_cards[i]
+		card.score()
+		await get_tree().create_timer(0.2, false).timeout
 
 func add_points(is_player : bool, amount : int) -> void:
-	pass
+	if is_player:
+		player_score += amount
+	else:
+		opponent_score += amount

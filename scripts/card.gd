@@ -6,7 +6,7 @@ var is_player : bool = false
 
 var selected : bool = false
 var playing : bool = false
-@onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var base: CardBase = $CardBase
 
 func setup(a : Arena, ip : bool) -> void:
 	arena = a
@@ -16,13 +16,13 @@ func select() -> void:
 	if playing: return
 	
 	if !selected:
-		anim.play("select")
+		base.select()
 	else:
-		anim.play("deselect")
+		base.deselect()
 	selected = !selected
 
 func deselect_anim() -> void:
-	anim.play("deselect")
+	base.deselect()
 
 func score() -> void:
 	push_error("No score function!")
