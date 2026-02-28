@@ -12,6 +12,11 @@ class_name Main
 const WALL_2 = preload("uid://w18si25raseq")
 const TABLE_2 = preload("uid://y33lbecgby21")
 
+const TABLE_3 = preload("uid://r1m6h8q2ca0h")
+const WALL_3 = preload("uid://x8u7stte1w14")
+
+var current_game : int = 0
+
 func _ready() -> void:
 	randomize()
 	
@@ -42,12 +47,8 @@ func face_next_opponent() -> void:
 	arena.reset()
 	
 	## New opponent arena
-	$Room/LeftWall.set_surface_override_material(0, WALL_2)
-	$Room/RightWall.set_surface_override_material(0, WALL_2)
-	$Room/ForwardWall.set_surface_override_material(0, WALL_2)
-	$Room/Table.set_surface_override_material(0, TABLE_2)
-	$Opp/Sprite3D.sprite_frames = load("res://textures/opp2.tres")
-	opp_sprite.play("idle")
+	current_game += 1
+	set_new_opponent()
 	
 	var tween : Tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 128), 2.0)
@@ -58,5 +59,23 @@ func face_next_opponent() -> void:
 	tournament_anim.play("start_round")
 	await tournament_anim.animation_finished
 	
-	arena.set_up_round(144, Color.CYAN)
 	arena.new_game()
+
+func set_new_opponent() -> void:
+	match current_game:
+		1:
+			$Room/LeftWall.set_surface_override_material(0, WALL_2)
+			$Room/RightWall.set_surface_override_material(0, WALL_2)
+			$Room/ForwardWall.set_surface_override_material(0, WALL_2)
+			$Room/Table.set_surface_override_material(0, TABLE_2)
+			$Opp/Sprite3D.sprite_frames = load("res://textures/opp2.tres")
+			opp_sprite.play("idle")
+			arena.set_up_round(144, Color.CYAN)
+		2:
+			$Room/LeftWall.set_surface_override_material(0, WALL_3)
+			$Room/RightWall.set_surface_override_material(0, WALL_3)
+			$Room/ForwardWall.set_surface_override_material(0, WALL_3)
+			$Room/Table.set_surface_override_material(0, TABLE_3)
+			$Opp/Sprite3D.sprite_frames = load("res://textures/opp3.tres")
+			opp_sprite.play("idle")
+			arena.set_up_round(192, Color.RED)

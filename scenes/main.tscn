@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=27 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -6,11 +6,13 @@
 [ext_resource type="Material" uid="uid://cgj07734r0aqj" path="res://materials/Floor.tres" id="2_sugp2"]
 [ext_resource type="Material" uid="uid://da2u6ev51nhea" path="res://materials/Table.tres" id="3_sugp2"]
 [ext_resource type="Environment" uid="uid://bq3xxfi078nbk" path="res://materials/Env.tres" id="4_jyhfs"]
-[ext_resource type="SpriteFrames" uid="uid://bn0hu4wm7a2qh" path="res://textures/opp1.tres" id="7_ya4ey"]
+[ext_resource type="SpriteFrames" uid="uid://bn0hu4wm7a2qh" path="res://textures/opp1.tres" id="7_trceg"]
 [ext_resource type="Texture2D" uid="uid://vkwiuul865ox" path="res://textures/tournament_icons/you.png" id="8_tipki"]
 [ext_resource type="Texture2D" uid="uid://cg6wp4d6enkdw" path="res://textures/tournament_back.png" id="8_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dsg6r8qmi0ocs" path="res://textures/tournament_icons/opp1.png" id="9_85g3d"]
 [ext_resource type="Texture2D" uid="uid://sybnn00sm1gd" path="res://textures/tournament_ui.png" id="10_choun"]
+[ext_resource type="Texture2D" uid="uid://bfpm2xjyh0sui" path="res://textures/tournament_icons/opp2.png" id="11_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://cnlal2h28a70r" path="res://textures/tournament_icons/opp3.png" id="12_trceg"]
 
 [sub_resource type="Animation" id="Animation_tipki"]
 length = 0.001
@@ -330,7 +332,7 @@ transform = Transform3D(1, 0, 1.4210855e-14, 0, 1, 0, -1.4210855e-14, 0, 1, 0, 1
 transform = Transform3D(-1.8, 0, -2.717924e-07, 0, 1.8, 0, 2.717924e-07, 0, -1.8, 0, 0, 0)
 alpha_cut = 1
 texture_filter = 0
-sprite_frames = ExtResource("7_ya4ey")
+sprite_frames = ExtResource("7_trceg")
 animation = &"idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Opp"]
@@ -424,7 +426,7 @@ offset_right = 56.0
 offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_85g3d")
+texture = ExtResource("11_eb6dy")
 
 [node name="Opp3" type="TextureRect" parent="Tournament/TUI/Back/Opps"]
 layout_mode = 1
@@ -439,7 +441,7 @@ offset_right = 56.0
 offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_85g3d")
+texture = ExtResource("12_trceg")
 
 [node name="Over" type="TextureRect" parent="Tournament/TUI"]
 layout_mode = 0
