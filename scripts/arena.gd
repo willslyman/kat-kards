@@ -363,7 +363,11 @@ func opp_select_card() -> void:
 	opp_selecting_card = false
 
 func end_current_game() -> int:
-	var result : int = await round_end.set_win(player_score > opp_score)
+	var result : int = await round_end.set_win(player_score >= opp_score)
+	
+	for card : Card in player_cards:
+		if is_instance_valid(card):
+			card.queue_free()
 	
 	current_max_rounds = normal_max_rounds
 	current_round = 1
