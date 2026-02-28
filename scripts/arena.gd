@@ -63,7 +63,6 @@ signal hand_completed
 
 func _ready() -> void:
 	main = get_parent()
-	round_end.setup(self, 96, Color.WHITE)
 
 func _process(_delta: float) -> void:
 	cursor.position = get_global_mouse_position()
@@ -420,7 +419,8 @@ func reset() -> void:
 	for card : Card in player_cards:
 		if is_instance_valid(card):
 			card.queue_free()
-	
+
+func new_game() -> void:
 	update_ui()
 	score_anim.play("show")
 	card_anim.play("show")
@@ -430,3 +430,6 @@ func reset() -> void:
 	show_notepad_butt()
 	player_selected_cards = []
 	opp_selected_cards = []
+
+func set_up_round(opp_region_x : int, opp_color : Color) -> void:
+	round_end.setup(self, opp_region_x, opp_color)

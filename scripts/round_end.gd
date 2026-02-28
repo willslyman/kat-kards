@@ -20,6 +20,9 @@ func setup(a : Arena, opp_region : int = 96, opp_col : Color = Color.RED) -> voi
 	opp_reg = opp_region
 	midway = arena.max_games / 2.0
 	opp_color = opp_col
+	player_wins = 0
+	opp_wins = 0
+	game_num = 0
 	
 	for i in range(arena.max_games):
 		var token_pos : Vector2 = Vector2((52 * i) - (52 * (arena.max_games / 2.0)) + (52/2.0), 60)
@@ -74,3 +77,5 @@ func reset() -> void:
 	$AnimationPlayer.play("RESET")
 	for token in tokens:
 		token.queue_free()
+	
+	tokens = []

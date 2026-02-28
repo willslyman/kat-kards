@@ -12,6 +12,7 @@ func _ready() -> void:
 	randomize()
 	
 	CardList.assign_textures()
+	arena.set_up_round(96, Color.WHITE)
 	arena.deal_cards()
 	opp_sprite.play("idle")
 
@@ -35,10 +36,13 @@ func face_next_opponent() -> void:
 	arena.reset()
 	
 	var tween : Tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 112), 2.0)
+	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 128), 2.0)
 	await tween.finished
 	
 	await get_tree().create_timer(3.0, false).timeout
 	
 	tournament_anim.play("start_round")
 	await tournament_anim.animation_finished
+	
+	arena.set_up_round(96, Color.RED)
+	arena.new_game()
