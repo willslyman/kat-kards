@@ -4,7 +4,7 @@ class_name Arena
 var main : Main = null
 @onready var cursor: Area2D = $Cursor
 
-var CARD = load("res://scenes/cards/plus_1.tscn")
+#var CARD = load("res://scenes/cards/plus_1.tscn")
 
 const CENTER : Vector2 = Vector2(320, 240)
 var currently_hovered_card : Card = null
@@ -45,7 +45,8 @@ func _input(event: InputEvent) -> void:
 
 func deal_cards() -> void:
 	for i in player_hand_size:
-		var c : Card = CARD.instantiate()
+		var card_name = CardList.card_list.keys().pick_random()
+		var c : Card = CardList.card_list[card_name].instantiate()
 		var card_pos : Vector2 = Vector2((100 * i) - (100 * (player_hand_size / 2.0)) + 50, 128)
 		player_card_holder.add_child(c)
 		c.position = card_pos
@@ -88,14 +89,29 @@ func _play_hand() -> void:
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(card, "position", card_pos, 0.5)
 	
+	await get_tree().create_timer(1.2, false).timeout 
+	
 	## Score cards
-	for i in selected_cards.size():
-		var card : Card = selected_cards[i]
-		card.score()
-		await get_tree().create_timer(0.2, false).timeout
+	for card_type in CardList.card_list:
+		for i in selected_cards.size():
+			if selected_cards[i].card_name == card_type:
+				var card : Card = selected_cards[i]
+				card.use()
+				card.score()
+				await get_tree().create_timer(0.2, false).timeout
+	#for i in selected_cards.size():
+	#	var card : Card = selected_cards[i]
+	#	card.score()
+	#	await get_tree().create_timer(0.2, false).timeout
 
 func add_points(is_player : bool, amount : int) -> void:
 	if is_player:
 		player_score += amount
 	else:
 		opponent_score += amount
+
+func add_mult(is_player : bool, mlt : int) -> void:
+	if is_player:
+		player_score *= mlt
+	else:
+		opponent_score *= mlt

@@ -28,8 +28,14 @@ func select() -> void:
 func deselect_anim() -> void:
 	base.deselect()
 
+func use() -> void:
+	base.use()
+
 func score() -> void:
 	push_error("No score function!")
 
 func add_points(amt : int) -> void:
 	arena.add_points(is_player, amt)
+
+func add_mult(mlt : float) -> void:
+	arena.add_mult(is_player, mlt)
