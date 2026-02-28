@@ -4,7 +4,9 @@ var card_list = {
 	"swap" : preload("uid://bc4vlcs44b3bl"),
 	"plus1" : preload("uid://ce855u7bi6ev1"),
 	"plus2" : preload("uid://gfjx2q1emkgw"),
+	"minus2" : preload("uid://bq1hl73ql6uhb"),
 	"times2" : preload("uid://bmtbradsvsyas"), 
+	"invert" : preload("uid://cmkpfod0jqjbn"),
 	"destroy" : preload("uid://g5wl5jd84fb7")
 }
 

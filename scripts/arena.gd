@@ -257,7 +257,7 @@ func destroy_opp_card() -> void:
 			opp_selected_cards[i].destroy()
 			return
 
-func swap_cards() -> void:
+func swap_cards() -> void: 
 	for i in range(card_play_size):
 		if i != current_card_play_idx:
 			var player_card : Card = player_selected_cards[i]
