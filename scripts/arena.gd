@@ -16,10 +16,9 @@ var currently_hovered_card : Card = null
 @onready var phs_label: RichTextLabel = $UI/HandScores/PlayerHandScore
 @onready var ohs_label: RichTextLabel = $UI/HandScores/OppHandScore
 @onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
-@onready var notepad: TextureRect = $Notepad
-
+@onready var notepad: Notepad = $Notepad
+@onready var notepad_butt_anim: AnimationPlayer = $NotepadButt/AnimationPlayer
 @onready var round_label: RichTextLabel = $UI/Round/RoundLabel
-
 
 ## Arena State Stuff
 var current_card_play_idx : int = -1
@@ -66,16 +65,26 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	cursor.position = get_global_mouse_position()
 	var areas : Array[Area2D] = cursor.get_overlapping_areas()
+	var possible_cards : Array[Card] = []
 	for area in areas:
 		if area is Card:
-			currently_hovered_card = area
-			if not playing_hand:
-				$UI/ToolTip/Label.text = CardList.card_thoughts[currently_hovered_card.card_name]
-			else:
-				$UI/ToolTip/Label.text = ""
-		
-	if areas.size() == 0:
+			possible_cards.append(area)
+	
+	# Select card with highest z index
+	if possible_cards.size() > 0 and not notepad.open:
+		currently_hovered_card = possible_cards[0]
+		for i in range(1, possible_cards.size(), 1):
+			var card = possible_cards[i]
+			if card.z_index > currently_hovered_card.z_index:
+				currently_hovered_card = card
+	else:
 		currently_hovered_card = null
+	
+	if is_instance_valid(currently_hovered_card):
+		if not playing_hand:
+			$UI/ToolTip/Label.text = CardList.card_thoughts[currently_hovered_card.card_name]
+		else:
+			$UI/ToolTip/Label.text = ""
 	
 	for card : Card in player_cards:
 		if not is_instance_valid(card): continue
@@ -161,6 +170,7 @@ func _play_hand() -> void:
 	player_hand_score = 0
 	opp_hand_score = 0
 	score_anim.play("hide")
+	notepad_butt_anim.play("hide")
 	phs_label.text = "0"
 	ohs_label.text = "0"
 	
@@ -260,6 +270,7 @@ func _play_hand() -> void:
 	
 	deal_cards()
 	playing_hand = false
+	show_notepad_butt()
 	player_selected_cards = []
 	opp_selected_cards = []
 
@@ -361,3 +372,8 @@ func hide_notepad() -> void:
 	$Notepad/AnimationPlayer.play("hide")
 	await $Notepad/AnimationPlayer.animation_finished
 	notepad.on_hide()
+
+func show_notepad_butt() -> void:
+	notepad_butt_anim.play("show")
+	await notepad_butt_anim.animation_finished
+	notepad_butt_anim.play("move")

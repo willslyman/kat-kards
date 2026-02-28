@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=39 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cvh7p40rgk2cv" path="res://textures/clock.png" id="2_xou0u"]
 [ext_resource type="FontFile" uid="uid://dgqo4kbtb6h2v" path="res://fonts/Stereofidelic.otf" id="3_sofqg"]
 [ext_resource type="Texture2D" uid="uid://cjekgrxrfu3in" path="res://textures/Think.png" id="5_2iqob"]
-[ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="5_xou0u"]
+[ext_resource type="Texture2D" uid="uid://dp7ud6kyk3as5" path="res://textures/opp1_ui.png" id="5_xou0u"]
 [ext_resource type="PackedScene" uid="uid://c16ttymnblvrx" path="res://scenes/notepad.tscn" id="6_psgti"]
+[ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="7_8creq"]
+[ext_resource type="Texture2D" uid="uid://jn6w76t47v1t" path="res://textures/notepad_icon.png" id="9_gf8qa"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
 length = 0.001
@@ -348,6 +350,81 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_5x102"]
 radius = 6.0
 
+[sub_resource type="Animation" id="Animation_ggsc0"]
+resource_name = "move"
+length = 3.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(528, 312), Vector2(528, 316), Vector2(528, 312)]
+}
+
+[sub_resource type="Animation" id="Animation_hgohx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(528, 312)]
+}
+
+[sub_resource type="Animation" id="Animation_18v6j"]
+resource_name = "hide"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(528, 312), Vector2(648, 312)]
+}
+
+[sub_resource type="Animation" id="Animation_s74wq"]
+resource_name = "show"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 0.3),
+"update": 0,
+"values": [Vector2(648, 312), Vector2(528, 312)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_18v6j"]
+_data = {
+&"RESET": SubResource("Animation_hgohx"),
+&"hide": SubResource("Animation_18v6j"),
+&"move": SubResource("Animation_ggsc0"),
+&"show": SubResource("Animation_s74wq")
+}
+
 [sub_resource type="Animation" id="Animation_ecs70"]
 length = 0.001
 tracks/0/type = "value"
@@ -474,7 +551,7 @@ horizontal_alignment = 2
 
 [node name="OppIcon" type="Sprite2D" parent="UI/Scores"]
 position = Vector2(536, 161)
-texture = ExtResource("2_0ct6v")
+texture = ExtResource("5_xou0u")
 
 [node name="OppLabel" type="RichTextLabel" parent="UI/Scores"]
 layout_mode = 0
@@ -585,7 +662,7 @@ offset_top = -7.0
 offset_right = 301.0
 offset_bottom = 25.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("5_xou0u")
+theme_override_fonts/normal_font = ExtResource("7_8creq")
 theme_override_font_sizes/normal_font_size = 24
 text = "I Think I know what this does"
 scroll_active = false
@@ -634,10 +711,16 @@ layout_mode = 0
 offset_left = 528.0
 offset_top = 312.0
 offset_right = 632.0
-offset_bottom = 384.0
+offset_bottom = 448.0
 focus_mode = 0
-icon = ExtResource("2_0ct6v")
+icon = ExtResource("9_gf8qa")
 flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NotepadButt"]
+libraries = {
+&"": SubResource("AnimationLibrary_18v6j")
+}
+autoplay = "move"
 
 [node name="Notepad" parent="." instance=ExtResource("6_psgti")]
 z_index = 12
