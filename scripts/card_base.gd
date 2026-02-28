@@ -10,7 +10,8 @@ func deselect() -> void:
 	$AnimationPlayer.play("deselect")
 
 func block_select() -> void:
-	$AnimationPlayer.play("block_select")
+	if not $AnimationPlayer.is_playing():
+		$AnimationPlayer.play("block_select")
 	
 func use() -> void:
 	$AnimationPlayer.play("use")

@@ -3,7 +3,8 @@ extends Node
 var card_list = {
 	"plus1" : preload("uid://ce855u7bi6ev1"),
 	"plus2" : preload("uid://gfjx2q1emkgw"),
-	"times2" : preload("uid://bmtbradsvsyas")
+	"times2" : preload("uid://bmtbradsvsyas"), 
+	"destroy" : preload("uid://g5wl5jd84fb7")
 }
 
 var card_textures = [

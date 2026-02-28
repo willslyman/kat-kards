@@ -34,10 +34,12 @@ var player_cards : Array[Card] = []
 @onready var player_label: RichTextLabel = $UI/PlayerLabel
 
 var current_cards_selected : int = 0
+var player_selected_cards : Array[Card] = []
 
 ## Opp Stats
 var opp_score : int = 0
 var opp_hand_score : int = 0
+var opp_selected_cards : Array[Card] = []
 
 
 func _ready() -> void:
@@ -98,7 +100,6 @@ func _play_hand() -> void:
 	player_hand_score = 0
 	opp_hand_score = 0
 	
-	var selected_cards : Array[Card] = []
 	for i in range(player_cards.size() - 1, -1, -1):
 		var card : Card = player_cards[i]
 		if card.selected:
@@ -108,14 +109,14 @@ func _play_hand() -> void:
 			player_card_holder.remove_child(card)
 			add_child(card)
 			card.position = pos
-			selected_cards.append(card)
+			player_selected_cards.append(card)
 	card_anim.play("hide")
 	
 	## Move cards to center
-	selected_cards.reverse()
-	for i in selected_cards.size():
-		var card : Card = selected_cards[i]
-		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,96)
+	player_selected_cards.reverse()
+	for i in player_selected_cards.size():
+		var card : Card = player_selected_cards[i]
+		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (player_selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,64)
 		
 		card.deselect_anim()
 		
@@ -123,11 +124,11 @@ func _play_hand() -> void:
 		tween.tween_property(card, "position", card_pos, 0.5)
 	
 	## Get opponent cards
-	var opp_selected_cards : Array[Card] = []
 	for i in card_play_size:
 		var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
 		add_child(c)
+		c.playing = true
 		c.position = Vector2(320,-128)
 		c.setup(self, false)
 		opp_selected_cards.append(c)
@@ -147,15 +148,14 @@ func _play_hand() -> void:
 	
 	
 	## Score cards
-	
-	for i in selected_cards.size():
-		for card_type in CardList.card_list:
-			if selected_cards[i].card_name == card_type:
-				var card : Card = selected_cards[i]
+	for card_type in CardList.card_list:
+		for i in player_selected_cards.size():
+			if player_selected_cards[i].card_name == card_type:
+				var card : Card = player_selected_cards[i]
 				await do_card(card)
-				
-	for i in opp_selected_cards.size():
-		for card_type in CardList.card_list:
+	
+	for card_type in CardList.card_list:
+		for i in opp_selected_cards.size():
 			if opp_selected_cards[i].card_name == card_type:
 				var card : Card = opp_selected_cards[i]
 				await do_card(card)
@@ -164,6 +164,7 @@ func _play_hand() -> void:
 	
 
 func do_card(card : Card) -> void:
+	if card.destroyed: return
 	await card.use()
 	card.un_use()
 	await get_tree().create_timer(0.4, false).timeout
@@ -187,3 +188,23 @@ func add_mult(is_player : bool, mlt : int) -> void:
 		opp_hand_score *= mlt
 		opp_hand_score_anim.play("score")
 		ohs_label.text = str(opp_hand_score)
+		
+func destroy_player_card() -> void:
+	var card_idxs = []
+	for i in range(player_selected_cards.size()):
+		card_idxs.append(i)
+	card_idxs.shuffle()
+	for i in card_idxs:
+		if not player_selected_cards[i].destroyed:
+			player_selected_cards[i].destroy()
+			return
+
+func destroy_opp_card() -> void:
+	var card_idxs = []
+	for i in range(opp_selected_cards.size()):
+		card_idxs.append(i)
+	card_idxs.shuffle()
+	for i in card_idxs:
+		if not opp_selected_cards[i].destroyed:
+			opp_selected_cards[i].destroy()
+			return

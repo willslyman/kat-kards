@@ -5,6 +5,7 @@
 [sub_resource type="GDScript" id="GDScript_lkyrt"]
 script/source = "extends Card
 
+# Multiply your score by two
 func score() -> void:
 	add_mult(2.0)
 "

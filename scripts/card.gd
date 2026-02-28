@@ -10,6 +10,10 @@ var selected : bool = false
 var playing : bool = false
 @onready var base: CardBase = $CardBase
 
+var in_use : bool = false
+
+var destroyed : bool = false
+
 func setup(a : Arena, ip : bool) -> void:
 	arena = a
 	is_player = ip
@@ -17,7 +21,10 @@ func setup(a : Arena, ip : bool) -> void:
 	base.set_texture(CardList.card_to_texture[card_name])
 
 func select() -> void:
-	if playing: return
+	if playing: 
+		if not in_use:
+			base.block_select()
+		return
 	
 	if !selected and arena.current_cards_selected == arena.card_play_size:
 		base.block_select()
@@ -35,12 +42,14 @@ func deselect_anim() -> void:
 	base.deselect()
 
 func use() -> void:
+	in_use = true
 	base.use()
 	await base.animation_player.animation_finished
 	await score()
 	
 func un_use() -> void:
 	base.un_use()
+	in_use = false
 
 func score() -> void:
 	push_error("No score function!")
@@ -50,3 +59,14 @@ func add_points(amt : int) -> void:
 
 func add_mult(mlt : float) -> void:
 	arena.add_mult(is_player, mlt)
+	
+func destroy() -> void:
+	destroyed = true
+	self.visible = false
+
+func destroy_other_card() -> void:
+	if is_player:
+		arena.destroy_opp_card()
+	else: 
+		arena.destroy_player_card()
+	
