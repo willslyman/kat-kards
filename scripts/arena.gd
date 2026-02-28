@@ -54,6 +54,8 @@ var opp_hand_score : int = 0
 var opp_selected_cards : Array[Card] = []
 var opp_selecting_card : bool = false
 
+var player_leads : bool = true
+
 ## Signals
 signal hand_completed
 
@@ -81,6 +83,7 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 
 func deal_cards() -> void:
+	opp_selecting_card = true
 	for i in player_hand_size:
 		# Skip if card exists
 		if i < player_cards.size() and player_cards[i] != null:
@@ -103,6 +106,11 @@ func deal_cards() -> void:
 			player_cards[i] = c
 		
 		await tween.finished
+	
+	if !player_leads:
+		opp_select_card()
+	else:
+		opp_selecting_card = false
 
 func select_card(card : Card) -> void:
 	var i : int = player_selected_cards.size()
@@ -111,7 +119,10 @@ func select_card(card : Card) -> void:
 	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(card, "position", PREPPING_CENTER + Vector2(48 * i, 0), 0.5)
 	
-	await opp_select_card()
+	if (opp_selected_cards.size() >= 3):
+		await tween.finished
+	else:
+		await opp_select_card()
 	
 	if i == 2:
 		_play_hand()
@@ -175,17 +186,24 @@ func _play_hand() -> void:
 	
 	
 	## Score cards
+	var first = player_selected_cards
+	var second = opp_selected_cards
+	
+	if not player_leads:
+		first = opp_selected_cards
+		second = player_selected_cards
+	
 	for card_type in CardList.card_list:
-		for i in player_selected_cards.size():
-			if player_selected_cards[i].card_name == card_type:
-				var card : Card = player_selected_cards[i]
+		for i in first.size():
+			if first[i].card_name == card_type:
+				var card : Card = first[i]
 				current_card_play_idx = i
 				await do_card(card)
 	
 	for card_type in CardList.card_list:
-		for i in opp_selected_cards.size():
-			if opp_selected_cards[i].card_name == card_type:
-				var card : Card = opp_selected_cards[i]
+		for i in second.size():
+			if second[i].card_name == card_type:
+				var card : Card = second[i]
 				current_card_play_idx = i
 				await do_card(card)
 	
@@ -224,6 +242,7 @@ func _play_hand() -> void:
 	main.from_table()
 	score_anim.play("show")
 	card_anim.play("show")
+	player_leads = !player_leads
 	await card_anim.animation_finished
 	
 	deal_cards()
