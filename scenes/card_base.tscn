@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct03lqcjb5p66"]
+[gd_scene load_steps=7 format=3 uid="uid://ct03lqcjb5p66"]
 
-[ext_resource type="Script" uid="uid://pcqnw3nmaqgu" path="res://scripts/card.gd" id="1_6u4wf"]
-[ext_resource type="Texture2D" uid="uid://cqdg55rn1kjfr" path="res://textures/card.png" id="1_d81rb"]
+[ext_resource type="Texture2D" uid="uid://cqdg55rn1kjfr" path="res://textures/card.png" id="1_pu4ih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6u4wf"]
 size = Vector2(88, 120)
@@ -12,7 +11,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/path = NodePath("CardBase:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -27,7 +26,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/path = NodePath("CardBase:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -43,7 +42,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/path = NodePath("CardBase:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -60,17 +59,15 @@ _data = {
 &"select": SubResource("Animation_6u4wf")
 }
 
-[node name="Card" type="Area2D"]
-script = ExtResource("1_6u4wf")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CardBase" type="CollisionShape2D"]
 shape = SubResource("RectangleShape2D_6u4wf")
 
-[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 show_behind_parent = true
-texture = ExtResource("1_d81rb")
+texture = ExtResource("1_pu4ih")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_kg30u")
 }
