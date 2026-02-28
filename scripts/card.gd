@@ -20,26 +20,23 @@ func setup(a : Arena, ip : bool) -> void:
 	
 	base.set_texture(CardList.card_to_texture[card_name])
 
+func hover() -> void:
+	base.hover()
+
+func unhover() -> void:
+	base.unhover()
+
 func select() -> void:
-	if playing: 
-		if not in_use:
-			base.block_select()
+	if playing or selected or arena.can_not_select():
+		#if not in_use:
+			#base.block_select()
 		return
 	
-	if !selected and arena.current_cards_selected == arena.card_play_size:
-		base.block_select()
-		return
-	
-	if !selected:
-		arena.current_cards_selected += 1
-		base.select()
-	else:
-		arena.current_cards_selected -= 1
-		base.deselect()
-	selected = !selected
+	selected = true
+	arena.select_card(self)
 
 func deselect_anim() -> void:
-	base.deselect()
+	base.unhover()
 
 func use() -> void:
 	in_use = true

@@ -7,9 +7,9 @@ var main : Main = null
 #var CARD = load("res://scenes/cards/plus_1.tscn")
 
 const CENTER : Vector2 = Vector2(320, 240)
+const PREPPING_CENTER : Vector2 = Vector2(-200, -160)
 var currently_hovered_card : Card = null
 @onready var card_anim: AnimationPlayer = $MyCards/AnimationPlayer
-@onready var play_button: Button = $PlayHand
 @onready var hand_score_anim: AnimationPlayer = $UI/HandScores/AnimationPlayer
 @onready var player_hand_score_anim: AnimationPlayer = $UI/HandScores/PlayerHandScore/AnimationPlayer
 @onready var opp_hand_score_anim: AnimationPlayer = $UI/HandScores/OppHandScore/AnimationPlayer
@@ -68,8 +68,12 @@ func _process(_delta: float) -> void:
 	if areas.size() == 0:
 		currently_hovered_card = null
 	
-	if currently_hovered_card:
-		pass
+	for card : Card in player_cards:
+		if not is_instance_valid(card): continue
+		if card == currently_hovered_card and !card.selected:
+			card.hover()
+		else:
+			card.unhover()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
@@ -99,6 +103,20 @@ func deal_cards() -> void:
 		
 		await tween.finished
 
+func select_card(card : Card) -> void:
+	var i : int = player_selected_cards.size()
+	player_selected_cards.append(card)
+	card.z_index = i
+	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(card, "position", PREPPING_CENTER + Vector2(48 * i, 0), 0.5)
+	
+	if i == 2:
+		await tween.finished
+		_play_hand()
+
+func can_not_select() -> bool:
+	return player_selected_cards.size() >= 3
+
 func _play_hand() -> void:
 	if playing_hand: return
 	
@@ -114,15 +132,13 @@ func _play_hand() -> void:
 	
 	playing_hand = true
 	main.to_table()
-	play_button.hide()
 	player_hand_score = 0
 	opp_hand_score = 0
 	score_anim.play("hide")
-	player_selected_cards = []
-	opp_selected_cards = []
 	phs_label.text = "0"
 	ohs_label.text = "0"
 	
+	## Remove cards from player hand and reparent them
 	for i in range(player_cards.size() - 1, -1, -1):
 		var card : Card = player_cards[i]
 		if card.selected:
@@ -132,11 +148,9 @@ func _play_hand() -> void:
 			player_card_holder.remove_child(card)
 			add_child(card)
 			card.position = pos
-			player_selected_cards.append(card)
 	card_anim.play("hide")
 	
-	## Move cards to center
-	player_selected_cards.reverse()
+	## Move player's cards to center
 	for i in player_selected_cards.size():
 		var card : Card = player_selected_cards[i]
 		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (player_selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,90)
@@ -222,11 +236,10 @@ func _play_hand() -> void:
 	card_anim.play("show")
 	await card_anim.animation_finished
 	
-	
 	deal_cards()
-	play_button.show()
 	playing_hand = false
-	
+	player_selected_cards = []
+	opp_selected_cards = []
 	
 func end_current_game() -> void:
 	current_round = 1

@@ -3,11 +3,13 @@ class_name CardBase
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-func select() -> void:
-	$AnimationPlayer.play("select")
+func hover() -> void:
+	if animation_player.assigned_animation != "select":
+		animation_player.play("select")
 
-func deselect() -> void:
-	$AnimationPlayer.play("deselect")
+func unhover() -> void:
+	if animation_player.assigned_animation not in ["deselect", ""]:
+		animation_player.play("deselect")
 
 func block_select() -> void:
 	if not $AnimationPlayer.is_playing():
