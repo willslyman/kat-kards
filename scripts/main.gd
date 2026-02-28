@@ -10,7 +10,7 @@ func _ready() -> void:
 	
 	CardList.assign_textures()
 	arena.deal_cards()
-	opp_sprite.play("idle1")
+	opp_sprite.play("idle")
 
 func to_table() -> void:
 	cam_anim.play("to_table")
@@ -19,4 +19,9 @@ func from_table() -> void:
 	cam_anim.play_backwards("to_table")
 
 func _on_arena_hand_completed() -> void:
-	opp_sprite.play("idle" + str(randi_range(1,3)))
+	if arena.player_score > arena.opp_score:
+		opp_sprite.play("losing")
+	elif arena.player_score < arena.opp_score:
+		opp_sprite.play("winning")
+	else:
+		opp_sprite.play("idle")
