@@ -18,6 +18,9 @@ var currently_hovered_card : Card = null
 @onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
 @onready var notepad: TextureRect = $Notepad
 
+## Arena State Stuff
+var current_card_play_idx : int = -1
+
 var playing_hand : bool = false
 
 ## Visual consts
@@ -166,13 +169,17 @@ func _play_hand() -> void:
 		for i in player_selected_cards.size():
 			if player_selected_cards[i].card_name == card_type:
 				var card : Card = player_selected_cards[i]
+				current_card_play_idx = i
 				await do_card(card)
 	
 	for card_type in CardList.card_list:
 		for i in opp_selected_cards.size():
 			if opp_selected_cards[i].card_name == card_type:
 				var card : Card = opp_selected_cards[i]
+				current_card_play_idx = i
 				await do_card(card)
+	
+	current_card_play_idx = -1
 	
 	## Go Back
 	var all_cards : Array[Card] = player_selected_cards + opp_selected_cards
@@ -249,6 +256,22 @@ func destroy_opp_card() -> void:
 		if not opp_selected_cards[i].destroyed:
 			opp_selected_cards[i].destroy()
 			return
+
+func swap_cards() -> void:
+	for i in range(card_play_size):
+		if i != current_card_play_idx:
+			var player_card : Card = player_selected_cards[i]
+			var opp_card : Card = opp_selected_cards[i]
+			player_card.is_player = false
+			opp_card.is_player = true
+			player_selected_cards[i] = opp_card
+			var player_tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE).set_parallel()
+			player_tween.tween_property(opp_card, "position", player_card.position, 0.2)
+			opp_selected_cards[i] = player_card
+			var opp_tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE).set_parallel()
+			opp_tween.tween_property(player_card, "position", opp_card.position, 0.2)
+			
+			await get_tree().create_timer(0.2, false).timeout
 
 func show_notepad() -> void:
 	$Notepad/AnimationPlayer.play("show")

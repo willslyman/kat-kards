@@ -1,6 +1,7 @@
 extends Node
 
 var card_list = {
+	"swap" : preload("uid://bc4vlcs44b3bl"),
 	"plus1" : preload("uid://ce855u7bi6ev1"),
 	"plus2" : preload("uid://gfjx2q1emkgw"),
 	"times2" : preload("uid://bmtbradsvsyas"), 

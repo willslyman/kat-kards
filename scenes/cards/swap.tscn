@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc4vlcs44b3bl"]
+
+[ext_resource type="PackedScene" uid="uid://ct03lqcjb5p66" path="res://scenes/card_base.tscn" id="1_sokg2"]
+
+[sub_resource type="GDScript" id="GDScript_lkyrt"]
+script/source = "extends Card
+
+# Swap the other two cards with opp
+func score() -> void:
+	swap_cards()
+	await get_tree().create_timer(0.4, false).timeout
+"
+
+[node name="Swap" type="Area2D"]
+script = SubResource("GDScript_lkyrt")
+card_name = "swap"
+
+[node name="CardBase" parent="." instance=ExtResource("1_sokg2")]

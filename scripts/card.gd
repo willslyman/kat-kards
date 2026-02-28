@@ -71,3 +71,5 @@ func destroy_other_card() -> void:
 	else: 
 		arena.destroy_player_card()
 	
+func swap_cards() -> void:
+	arena.swap_cards()
