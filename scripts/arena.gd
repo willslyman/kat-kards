@@ -52,6 +52,7 @@ var player_selected_cards : Array[Card] = []
 var opp_score : int = 0
 var opp_hand_score : int = 0
 var opp_selected_cards : Array[Card] = []
+var opp_selecting_card : bool = false
 
 ## Signals
 signal hand_completed
@@ -110,12 +111,13 @@ func select_card(card : Card) -> void:
 	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(card, "position", PREPPING_CENTER + Vector2(48 * i, 0), 0.5)
 	
+	await opp_select_card()
+	
 	if i == 2:
-		await tween.finished
 		_play_hand()
 
 func can_not_select() -> bool:
-	return player_selected_cards.size() >= 3
+	return player_selected_cards.size() >= 3 or opp_selecting_card
 
 func _play_hand() -> void:
 	if playing_hand: return
@@ -159,18 +161,6 @@ func _play_hand() -> void:
 		
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(card, "position", card_pos, 0.5)
-	
-	## Get opponent cards
-	for i in card_play_size:
-		var card_name = CardList.card_list.keys().pick_random()
-		var c : Card = CardList.card_list[card_name].instantiate()
-		add_child(c)
-		c.playing = true
-		c.position = Vector2(320,-128)
-		c.setup(self, false)
-		opp_selected_cards.append(c)
-	
-	await get_tree().create_timer(1.2, false).timeout 
 	
 	## Show opponent cards
 	for i in range(opp_selected_cards.size()):
@@ -240,7 +230,26 @@ func _play_hand() -> void:
 	playing_hand = false
 	player_selected_cards = []
 	opp_selected_cards = []
+
+func opp_select_card() -> void:
+	opp_selecting_card = true
+	await get_tree().create_timer(0.5, false).timeout
 	
+	var card_name = CardList.card_list.keys().pick_random()
+	var card : Card = CardList.card_list[card_name].instantiate()
+	add_child(card)
+	card.position = Vector2(64,-32)
+	card.setup(self, false)
+	
+	var i : int = opp_selected_cards.size()
+	opp_selected_cards.append(card)
+	card.z_index = i
+	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(card, "position", Vector2(64, 96) + Vector2(48 * i, 0), 0.5)
+	
+	await tween.finished
+	opp_selecting_card = false
+
 func end_current_game() -> void:
 	current_round = 1
 	player_score = 0

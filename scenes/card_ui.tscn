@@ -412,6 +412,9 @@ grow_vertical = 2
 pivot_offset = Vector2(320, 240)
 script = ExtResource("1_e1hm3")
 
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(24, 64)
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -594,9 +597,6 @@ vertical_alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_psgti")
 }
-
-[node name="Node2D" type="Node2D" parent="MyCards"]
-position = Vector2(-240, -136)
 
 [node name="Cursor" type="Area2D" parent="."]
 
