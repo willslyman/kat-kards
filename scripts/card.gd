@@ -60,6 +60,9 @@ func add_points(amt : int) -> void:
 
 func add_mult(mlt : float) -> void:
 	arena.add_mult(is_player, mlt)
+
+func current_round() -> int:
+	return arena.current_round
 	
 func destroy() -> void:
 	destroyed = true

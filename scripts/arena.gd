@@ -18,8 +18,14 @@ var currently_hovered_card : Card = null
 @onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
 @onready var notepad: TextureRect = $Notepad
 
+@onready var round_label: RichTextLabel = $UI/Round/RoundLabel
+
+
 ## Arena State Stuff
 var current_card_play_idx : int = -1
+
+var current_round : int = 1
+var current_max_rounds : int = 3
 
 var playing_hand : bool = false
 
@@ -195,6 +201,16 @@ func _play_hand() -> void:
 	## Compute scores
 	player_score += player_hand_score
 	opp_score += opp_hand_score
+	
+	## Update round
+	if current_round == current_max_rounds:
+		end_current_game()
+	else:
+		current_round += 1
+		
+	## UI updates
+	round_label.text = str(current_round) + "/" + str(current_max_rounds)
+	
 	player_label.text = str(player_score)
 	opp_label.text = str(opp_score)
 	
@@ -205,9 +221,17 @@ func _play_hand() -> void:
 	score_anim.play("show")
 	card_anim.play("show")
 	await card_anim.animation_finished
+	
+	
 	deal_cards()
 	play_button.show()
 	playing_hand = false
+	
+	
+func end_current_game() -> void:
+	current_round = 1
+	player_score = 0
+	opp_score = 0
 
 func do_card(card : Card) -> void:
 	if card.destroyed: return

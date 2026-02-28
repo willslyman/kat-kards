@@ -6,6 +6,7 @@ var card_list = {
 	"plus2" : preload("uid://gfjx2q1emkgw"),
 	"minus2" : preload("uid://bq1hl73ql6uhb"),
 	"times2" : preload("uid://bmtbradsvsyas"), 
+	"timesround" : preload("uid://bk7ova61wxi4v"),
 	"invert" : preload("uid://cmkpfod0jqjbn"),
 	"destroy" : preload("uid://g5wl5jd84fb7")
 }
