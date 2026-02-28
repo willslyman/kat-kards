@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ct03lqcjb5p66"]
+[gd_scene load_steps=12 format=3 uid="uid://ct03lqcjb5p66"]
 
 [ext_resource type="Script" uid="uid://72nctvodwunf" path="res://scripts/card_base.gd" id="1_5oewf"]
 [ext_resource type="Texture2D" uid="uid://cqdg55rn1kjfr" path="res://textures/cards/card.png" id="1_pu4ih"]
+[ext_resource type="Texture2D" uid="uid://b6oy1a2iran52" path="res://textures/block.png" id="2_wpe30"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6u4wf"]
 size = Vector2(88, 120)
@@ -43,6 +44,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Block:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_wpe30"]
@@ -109,11 +122,27 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_p6qud"]
+resource_name = "get_blocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Block:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kg30u"]
 _data = {
 &"RESET": SubResource("Animation_ktuci"),
 &"block_select": SubResource("Animation_wpe30"),
 &"deselect": SubResource("Animation_kg30u"),
+&"get_blocked": SubResource("Animation_p6qud"),
 &"select": SubResource("Animation_6u4wf"),
 &"use": SubResource("Animation_5oewf")
 }
@@ -121,6 +150,10 @@ _data = {
 [node name="CardBase" type="CollisionShape2D"]
 shape = SubResource("RectangleShape2D_6u4wf")
 script = ExtResource("1_5oewf")
+
+[node name="Block" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_wpe30")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 show_behind_parent = true

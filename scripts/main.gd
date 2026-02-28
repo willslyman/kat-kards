@@ -1,6 +1,8 @@
 extends Node3D
 class_name Main
 
+@export var debug_info : bool = false
+
 @onready var cam_anim: AnimationPlayer = $Camera3D/AnimationPlayer
 @onready var arena: Arena = $Arena
 @onready var opp_sprite: AnimatedSprite3D = $Opp/Sprite3D
@@ -14,6 +16,8 @@ func _ready() -> void:
 	randomize()
 	
 	CardList.assign_textures()
+	if debug_info:
+		CardList.debug_set_cardnames()
 	arena.set_up_round(96, Color.WHITE)
 	arena.deal_cards()
 	opp_sprite.play("idle")

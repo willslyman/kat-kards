@@ -14,11 +14,18 @@ var in_use : bool = false
 
 var destroyed : bool = false
 
+var block : bool = false
+
+func get_blocked():
+	base.get_blocked()
+
 func setup(a : Arena, ip : bool) -> void:
 	arena = a
 	is_player = ip
 	
 	base.set_texture(CardList.card_to_texture[card_name])
+	
+	on_create()
 
 func hover() -> void:
 	base.hover()
@@ -49,6 +56,9 @@ func un_use() -> void:
 
 func score() -> void:
 	push_error("No score function!")
+	
+func on_create() -> void:
+	pass
 
 func add_points(amt : int, to_other = false) -> void:
 	if to_other:

@@ -6,6 +6,7 @@ const categorie_weights = [10, 3, 1]
 var rng = null
 
 var card_list = {
+	"block" : preload("uid://bdprnt4tmokkj"),
 	"nothing" : preload("uid://bh2li4s4vl4vx"),
 	
 	"swap" : preload("uid://bc4vlcs44b3bl"),
@@ -26,7 +27,7 @@ var card_list = {
 
 var card_categories = {
 	"common": ["plus1", "plus2", "minus2", "times2", "minus2other"],
-	"rare" : ["swap", "destroy", "nothing"],
+	"rare" : ["swap", "destroy", "nothing", "block"],
 	"legendary" : ["plusround", "addround", "invert"]
 }
 
@@ -41,7 +42,6 @@ var card_textures = [
 	preload("uid://cob24bfvkyht5"),
 	preload("uid://d0causlxcmxaa"),
 	preload("uid://c2uh3ur5kigcb"),
-	preload("uid://cqdg55rn1kjfr"),
 	preload("uid://lgkeh2qunf0o"),
 	preload("uid://bxicfg8eq32j4"),
 	preload("uid://bn1dkgtsb2qdn"),
@@ -72,3 +72,8 @@ func assign_textures() -> void:
 		card_to_texture[card] = card_textures[i]
 		card_thoughts[card] = ""
 		i += 1
+
+func debug_set_cardnames() -> void:
+	for n in card_list.keys():
+		card_thoughts[n] = n
+		seen_cards.append(n)

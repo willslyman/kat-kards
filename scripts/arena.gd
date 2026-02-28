@@ -25,7 +25,7 @@ var currently_hovered_card : Card = null
 var current_card_play_idx : int = -1
 
 var max_games : int = 3
-const normal_max_rounds : int = 1
+const normal_max_rounds : int = 5
 var current_round : int = 1
 var current_max_rounds : int = normal_max_rounds
 
@@ -228,14 +228,34 @@ func _play_hand() -> void:
 			if first[i].card_name == card_type:
 				var card : Card = first[i]
 				current_card_play_idx = i
-				await do_card(card)
+				if second[i].block:
+					card.get_blocked()
+					await second[i].use()
+					second[i].un_use()
+					if second[i].card_name not in CardList.seen_cards:
+						CardList.seen_cards.append(second[i].card_name)
+					await get_tree().create_timer(0.4, false).timeout
+				elif card.block:
+					pass
+				else:
+					await do_card(card)
 	
 	for card_type in CardList.card_list:
 		for i in second.size():
 			if second[i].card_name == card_type:
 				var card : Card = second[i]
 				current_card_play_idx = i
-				await do_card(card)
+				if first[i].block:
+					card.get_blocked()
+					await first[i].use()
+					first[i].un_use()
+					if first[i].card_name not in CardList.seen_cards:
+						CardList.seen_cards.append(first[i].card_name)
+					await get_tree().create_timer(0.4, false).timeout
+				elif card.block:
+					pass
+				else:
+					await do_card(card)
 	
 	current_card_play_idx = -1
 	
@@ -340,6 +360,8 @@ func do_card(card : Card) -> void:
 	if card.destroyed: return
 	if card.card_name not in CardList.seen_cards:
 		CardList.seen_cards.append(card.card_name)
+	
+	if card.block: return 
 	await card.use()
 	card.un_use()
 	await get_tree().create_timer(0.4, false).timeout

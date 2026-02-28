@@ -14,6 +14,9 @@ func unhover() -> void:
 func block_select() -> void:
 	if not $AnimationPlayer.is_playing():
 		$AnimationPlayer.play("block_select")
+
+func get_blocked() -> void:
+	$AnimationPlayer.play("get_blocked")
 	
 func use() -> void:
 	$AnimationPlayer.play("use")
