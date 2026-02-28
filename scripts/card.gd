@@ -50,8 +50,11 @@ func un_use() -> void:
 func score() -> void:
 	push_error("No score function!")
 
-func add_points(amt : int) -> void:
-	arena.add_points(is_player, amt)
+func add_points(amt : int, to_other = false) -> void:
+	if to_other:
+		arena.add_points(not is_player, amt)
+	else:
+		arena.add_points(is_player, amt)
 
 func add_mult(mlt : float) -> void:
 	arena.add_mult(is_player, mlt)

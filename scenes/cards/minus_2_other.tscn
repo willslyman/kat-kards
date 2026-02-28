@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnxsdam1ucx2k"]
+
+[ext_resource type="PackedScene" uid="uid://ct03lqcjb5p66" path="res://scenes/card_base.tscn" id="1_ipyl1"]
+
+[sub_resource type="GDScript" id="GDScript_lkyrt"]
+script/source = "extends Card
+
+# Sub two from your opps score
+func score() -> void:
+	add_points(-2, true)
+"
+
+[node name="Minus2Other" type="Area2D"]
+script = SubResource("GDScript_lkyrt")
+card_name = "minus2other"
+
+[node name="CardBase" parent="." instance=ExtResource("1_ipyl1")]

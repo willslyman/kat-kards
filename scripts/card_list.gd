@@ -7,21 +7,27 @@ var rng = null
 
 var card_list = {
 	"nothing" : preload("uid://bh2li4s4vl4vx"),
+	
 	"swap" : preload("uid://bc4vlcs44b3bl"),
+	"destroy" : preload("uid://g5wl5jd84fb7"),
+	
 	"plus1" : preload("uid://ce855u7bi6ev1"),
 	"plus2" : preload("uid://gfjx2q1emkgw"),
 	"minus2" : preload("uid://bq1hl73ql6uhb"),
 	"times2" : preload("uid://bmtbradsvsyas"), 
-	"timesround" : preload("uid://bk7ova61wxi4v"),
+	
+	"minus2other" : preload("uid://dnxsdam1ucx2k"),
+	
+	"plusround" : preload("uid://bk7ova61wxi4v"),
 	"addround" : preload("uid://4gq5f7rcktu7"),
+	
 	"invert" : preload("uid://cmkpfod0jqjbn"),
-	"destroy" : preload("uid://g5wl5jd84fb7")
 }
 
 var card_categories = {
-	"common": ["plus1", "plus2", "minus2", "times2"],
+	"common": ["plus1", "plus2", "minus2", "times2", "minus2other"],
 	"rare" : ["swap", "destroy", "nothing"],
-	"legendary" : ["timesround", "addround", "invert"]
+	"legendary" : ["plusround", "addround", "invert"]
 }
 
 var card_textures = [
@@ -34,7 +40,13 @@ var card_textures = [
 	preload("uid://cf1cb3pf31wmb"),
 	preload("uid://cob24bfvkyht5"),
 	preload("uid://d0causlxcmxaa"),
-	preload("uid://c2uh3ur5kigcb")
+	preload("uid://c2uh3ur5kigcb"),
+	preload("uid://cqdg55rn1kjfr"),
+	preload("uid://lgkeh2qunf0o"),
+	preload("uid://bxicfg8eq32j4"),
+	preload("uid://bn1dkgtsb2qdn"),
+	preload("uid://bcq4a31leuusf"),
+	preload("uid://blb6257y6swqy"),
 ]
 
 var card_to_texture = {}
