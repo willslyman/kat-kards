@@ -24,8 +24,9 @@ var currently_hovered_card : Card = null
 ## Arena State Stuff
 var current_card_play_idx : int = -1
 
+const normal_max_rounds : int = 5
 var current_round : int = 1
-var current_max_rounds : int = 3
+var current_max_rounds : int = normal_max_rounds
 
 var playing_hand : bool = false
 
@@ -100,7 +101,8 @@ func deal_cards() -> void:
 		if i < player_cards.size() and player_cards[i] != null:
 			continue
 		
-		var card_name = CardList.card_list.keys().pick_random()
+		var card_name : String = CardList.get_a_card()
+		#var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
 		var card_pos : Vector2 = Vector2((hand_card_gap * i) - (hand_card_gap * (player_hand_size / 2.0)) + (hand_card_gap/2.0), 128)
 		player_card_holder.add_child(c)
@@ -265,7 +267,8 @@ func opp_select_card() -> void:
 	opp_selecting_card = true
 	await get_tree().create_timer(0.5, false).timeout
 	
-	var card_name = CardList.card_list.keys().pick_random()
+	#var card_name = CardList.card_list.keys().pick_random()
+	var card_name : String = CardList.get_a_card()
 	var card : Card = CardList.card_list[card_name].instantiate()
 	add_child(card)
 	card.position = Vector2(64,-32)
@@ -281,6 +284,7 @@ func opp_select_card() -> void:
 	opp_selecting_card = false
 
 func end_current_game() -> void:
+	current_max_rounds = normal_max_rounds
 	current_round = 1
 	player_score = 0
 	opp_score = 0

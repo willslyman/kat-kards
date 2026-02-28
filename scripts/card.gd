@@ -71,3 +71,6 @@ func destroy_other_card() -> void:
 	
 func swap_cards() -> void:
 	arena.swap_cards()
+
+func add_round() -> void:
+	arena.current_max_rounds += 1

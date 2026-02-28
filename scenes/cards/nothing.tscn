@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh2li4s4vl4vx"]
+
+[ext_resource type="PackedScene" uid="uid://ct03lqcjb5p66" path="res://scenes/card_base.tscn" id="1_deqn6"]
+
+[sub_resource type="GDScript" id="GDScript_lkyrt"]
+script/source = "extends Card
+
+# Does nothing
+func score() -> void:
+	pass
+"
+
+[node name="Nothing" type="Area2D"]
+script = SubResource("GDScript_lkyrt")
+card_name = "nothing"
+
+[node name="CardBase" parent="." instance=ExtResource("1_deqn6")]
