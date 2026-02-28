@@ -48,7 +48,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_tipki")
 }],
 "loop": true,
-"name": &"idle1",
+"name": &"idle",
 "speed": 8.0
 }, {
 "frames": [{
@@ -71,7 +71,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_choun")
 }],
 "loop": true,
-"name": &"idle2",
+"name": &"losing",
 "speed": 8.0
 }, {
 "frames": [{
@@ -94,6 +94,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_eb6dy")
 }],
 "loop": true,
-"name": &"idle3",
+"name": &"winning",
 "speed": 8.0
 }]
