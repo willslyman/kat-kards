@@ -124,14 +124,14 @@ func _play_hand() -> void:
 	await get_tree().create_timer(1.0, false).timeout
 	
 	## Score cards
-	for i in player_selected_cards.size():
-		for card_type in CardList.card_list:
+	for card_type in CardList.card_list:
+		for i in player_selected_cards.size():
 			if player_selected_cards[i].card_name == card_type:
 				var card : Card = player_selected_cards[i]
 				await do_card(card)
-				
-	for i in opp_selected_cards.size():
-		for card_type in CardList.card_list:
+	
+	for card_type in CardList.card_list:
+		for i in opp_selected_cards.size():
 			if opp_selected_cards[i].card_name == card_type:
 				var card : Card = opp_selected_cards[i]
 				await do_card(card)
