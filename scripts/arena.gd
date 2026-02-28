@@ -106,6 +106,7 @@ func _play_hand() -> void:
 		var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
 		add_child(c)
+		c.playing = true
 		c.position = Vector2(320,-128)
 		c.setup(self, false)
 		opp_selected_cards.append(c)
