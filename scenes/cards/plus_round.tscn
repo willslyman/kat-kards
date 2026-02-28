@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk7ova61wxi4v"]
+
+[ext_resource type="PackedScene" uid="uid://ct03lqcjb5p66" path="res://scenes/card_base.tscn" id="1_k13hm"]
+
+[sub_resource type="GDScript" id="GDScript_lkyrt"]
+script/source = "extends Card
+
+# Add the round number to your score
+func score() -> void:
+	add_points(current_round())
+"
+
+[node name="TimesRound" type="Area2D"]
+script = SubResource("GDScript_lkyrt")
+card_name = "plusround"
+
+[node name="CardBase" parent="." instance=ExtResource("1_k13hm")]
