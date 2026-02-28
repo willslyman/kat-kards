@@ -12,7 +12,11 @@ var card_textures = [
 	preload("uid://cpf6gxsmk6fo5"),
 	preload("uid://b62d2ipf820vo"),
 	preload("uid://bmjol6vl4j7l7"),
-	preload("uid://birmcdetu2lug")
+	preload("uid://birmcdetu2lug"),
+	preload("uid://cf1cb3pf31wmb"),
+	preload("uid://cob24bfvkyht5"),
+	preload("uid://d0causlxcmxaa")
+	
 ]
 
 var card_to_texture = {}
