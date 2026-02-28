@@ -1,4 +1,8 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://da2u6ev51nhea"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://da2u6ev51nhea"]
+
+[ext_resource type="Texture2D" uid="uid://blnfn4lrrcj8r" path="res://textures/table1.png" id="1_hfs33"]
 
 [resource]
-albedo_color = Color(0.16206557, 0.1620656, 0.16206557, 1)
+albedo_texture = ExtResource("1_hfs33")
+uv1_scale = Vector3(10.48, 5.965, 10)
+texture_filter = 0
