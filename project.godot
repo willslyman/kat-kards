@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kat Kards"
-run/main_scene="uid://dt3co4u4d2st8"
+run/main_scene="uid://d1t3eql6ynoai"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
