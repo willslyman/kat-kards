@@ -55,6 +55,7 @@ var opp_score : int = 0
 var opp_hand_score : int = 0
 var opp_selected_cards : Array[Card] = []
 var opp_selecting_card : bool = false
+var opp_cards : Array[Card] = []
 
 var player_leads : bool = true
 
@@ -113,6 +114,20 @@ func deal_cards() -> void:
 	
 	opp_selecting_card = true
 	for i in player_hand_size:
+		## Give opp random card
+		if not (i < player_cards.size() and player_cards[i] != null):
+			var card_name : String = CardList.get_a_card()
+			var c : Card = CardList.card_list[card_name].instantiate()
+			add_child(c)
+			c.setup(self, false)
+			c.position.y -= 256
+			opp_cards.append(c)
+		
+			if opp_cards.size() <= i:
+				opp_cards.append(c)
+			else:
+				opp_cards[i] = c
+		
 		# Skip if card exists
 		if i < player_cards.size() and player_cards[i] != null:
 			continue
@@ -332,11 +347,11 @@ func opp_select_card() -> void:
 	await get_tree().create_timer(0.5, false).timeout
 	
 	#var card_name = CardList.card_list.keys().pick_random()
-	var card_name : String = CardList.get_a_card()
-	var card : Card = CardList.card_list[card_name].instantiate()
-	add_child(card)
-	card.position = Vector2(64,-32)
-	card.setup(self, false)
+	#var card_name : String = CardList.get_a_card()
+	var card : Card = Ai.pick_card(main.current_game, opp_cards, opp_selected_cards, player_selected_cards, player_leads)
+	opp_cards.erase(card)
+	#card.position = Vector2(64,-32)
+	#card.setup(self, false)
 	
 	var i : int = opp_selected_cards.size()
 	opp_selected_cards.append(card)
