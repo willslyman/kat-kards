@@ -69,3 +69,8 @@ func set_win(is_player : bool) -> int:
 	await $AnimationPlayer.animation_finished
 	
 	return status
+
+func reset() -> void:
+	$AnimationPlayer.play("RESET")
+	for token in tokens:
+		token.queue_free()

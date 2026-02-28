@@ -105,6 +105,9 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
 		currently_hovered_card.select()
+	
+	if event.is_action_pressed("debug"):
+		player_score += 999
 
 func deal_cards() -> void:
 	round_label.text = str(current_round) + "/" + str(current_max_rounds)
@@ -280,6 +283,7 @@ func _play_hand() -> void:
 		var status : int = await end_current_game()
 		## Player won!
 		if status == 0:
+			main.face_next_opponent()
 			return
 		## Player lost...
 		elif status == 1:
@@ -410,3 +414,19 @@ func show_notepad_butt() -> void:
 	notepad_butt_anim.play("show")
 	await notepad_butt_anim.animation_finished
 	notepad_butt_anim.play("move")
+
+func reset() -> void:
+	round_end.reset()
+	for card : Card in player_cards:
+		if is_instance_valid(card):
+			card.queue_free()
+	
+	update_ui()
+	score_anim.play("show")
+	card_anim.play("show")
+	await card_anim.animation_finished
+	deal_cards()
+	playing_hand = false
+	show_notepad_butt()
+	player_selected_cards = []
+	opp_selected_cards = []
