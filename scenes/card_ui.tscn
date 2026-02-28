@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=30 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
 [ext_resource type="Texture2D" uid="uid://c456416aioqvu" path="res://textures/card_holder.png" id="2_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://blptxan683jsi" path="res://textures/play_hand.png" id="3_birkm"]
 [ext_resource type="FontFile" uid="uid://dgqo4kbtb6h2v" path="res://fonts/Stereofidelic.otf" id="3_sofqg"]
+[ext_resource type="PackedScene" uid="uid://c16ttymnblvrx" path="res://scenes/notepad.tscn" id="6_psgti"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
 length = 0.001
@@ -309,6 +310,62 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_5x102"]
 radius = 6.0
 
+[sub_resource type="Animation" id="Animation_c80a1"]
+resource_name = "show"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0, 480), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ecs70"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 480)]
+}
+
+[sub_resource type="Animation" id="Animation_n7gg6"]
+resource_name = "hide"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 0.3),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 480)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7gg6"]
+_data = {
+&"RESET": SubResource("Animation_ecs70"),
+&"hide": SubResource("Animation_n7gg6"),
+&"show": SubResource("Animation_c80a1")
+}
+
 [node name="Arena" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -494,4 +551,26 @@ focus_mode = 0
 icon = ExtResource("3_birkm")
 flat = true
 
+[node name="NotepadButt" type="Button" parent="."]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 312.0
+offset_right = 632.0
+offset_bottom = 384.0
+focus_mode = 0
+icon = ExtResource("2_0ct6v")
+flat = true
+
+[node name="Notepad" parent="." instance=ExtResource("6_psgti")]
+layout_mode = 1
+offset_top = 480.0
+offset_bottom = 480.00018
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Notepad"]
+libraries = {
+&"": SubResource("AnimationLibrary_n7gg6")
+}
+
 [connection signal="pressed" from="PlayHand" to="." method="_play_hand"]
+[connection signal="pressed" from="NotepadButt" to="." method="show_notepad"]
+[connection signal="on_back" from="Notepad" to="." method="hide_notepad"]

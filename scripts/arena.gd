@@ -16,6 +16,7 @@ var currently_hovered_card : Card = null
 @onready var phs_label: RichTextLabel = $UI/HandScores/PlayerHandScore
 @onready var ohs_label: RichTextLabel = $UI/HandScores/OppHandScore
 @onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
+@onready var notepad: TextureRect = $Notepad
 
 var playing_hand : bool = false
 
@@ -203,6 +204,8 @@ func _play_hand() -> void:
 
 func do_card(card : Card) -> void:
 	if card.destroyed: return
+	if card.card_name not in CardList.seen_cards:
+		CardList.seen_cards.append(card.card_name)
 	await card.use()
 	card.un_use()
 	await get_tree().create_timer(0.4, false).timeout
@@ -246,3 +249,12 @@ func destroy_opp_card() -> void:
 		if not opp_selected_cards[i].destroyed:
 			opp_selected_cards[i].destroy()
 			return
+
+func show_notepad() -> void:
+	$Notepad/AnimationPlayer.play("show")
+	notepad.on_show()
+
+func hide_notepad() -> void:
+	$Notepad/AnimationPlayer.play("hide")
+	await $Notepad/AnimationPlayer.animation_finished
+	notepad.on_hide()

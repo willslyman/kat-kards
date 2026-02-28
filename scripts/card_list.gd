@@ -17,10 +17,12 @@ var card_textures = [
 	preload("uid://cf1cb3pf31wmb"),
 	preload("uid://cob24bfvkyht5"),
 	preload("uid://d0causlxcmxaa")
-	
 ]
 
 var card_to_texture = {}
+
+var seen_cards : Array[String] = []
+var card_thoughts : Dictionary = {}
 
 func assign_textures() -> void:
 	card_textures.shuffle()
@@ -28,6 +30,5 @@ func assign_textures() -> void:
 	var i : int = 0
 	for card in card_list.keys():
 		card_to_texture[card] = card_textures[i]
+		card_thoughts[card] = ""
 		i += 1
-	
-	print(card_to_texture)
