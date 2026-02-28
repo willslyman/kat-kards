@@ -28,8 +28,6 @@ func unhover() -> void:
 
 func select() -> void:
 	if playing or selected or arena.can_not_select() or !is_player:
-		#if not in_use:
-			#base.block_select()
 		return
 	
 	selected = true

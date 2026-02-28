@@ -68,15 +68,26 @@ func _process(_delta: float) -> void:
 	for area in areas:
 		if area is Card:
 			currently_hovered_card = area
+			if not playing_hand:
+				$UI/ToolTip/Label.text = CardList.card_thoughts[currently_hovered_card.card_name]
+			else:
+				$UI/ToolTip/Label.text = ""
+		
 	if areas.size() == 0:
 		currently_hovered_card = null
 	
 	for card : Card in player_cards:
 		if not is_instance_valid(card): continue
+		
 		if card == currently_hovered_card and !card.selected:
 			card.hover()
 		else:
 			card.unhover()
+	
+	if currently_hovered_card != null and $UI/ToolTip/Label.text != "" :
+		$UI/ToolTip.visible = true
+	else:
+		$UI/ToolTip.visible = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:

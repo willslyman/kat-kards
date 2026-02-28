@@ -1,10 +1,12 @@
-[gd_scene load_steps=30 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=32 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
 [ext_resource type="Texture2D" uid="uid://c456416aioqvu" path="res://textures/card_holder.png" id="2_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://cvh7p40rgk2cv" path="res://textures/clock.png" id="2_xou0u"]
 [ext_resource type="FontFile" uid="uid://dgqo4kbtb6h2v" path="res://fonts/Stereofidelic.otf" id="3_sofqg"]
+[ext_resource type="Texture2D" uid="uid://cjekgrxrfu3in" path="res://textures/Think.png" id="5_2iqob"]
+[ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="5_xou0u"]
 [ext_resource type="PackedScene" uid="uid://c16ttymnblvrx" path="res://scenes/notepad.tscn" id="6_psgti"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
@@ -565,6 +567,29 @@ libraries = {
 &"": SubResource("AnimationLibrary_q75a2")
 }
 
+[node name="ToolTip" type="Control" parent="UI"]
+z_index = 10
+anchors_preset = 0
+offset_left = 266.0
+offset_top = 237.0
+offset_right = 306.0
+offset_bottom = 277.0
+
+[node name="TinyThink" type="Sprite2D" parent="UI/ToolTip"]
+position = Vector2(173, 6)
+texture = ExtResource("5_2iqob")
+
+[node name="Label" type="RichTextLabel" parent="UI/ToolTip"]
+layout_mode = 0
+offset_top = -7.0
+offset_right = 301.0
+offset_bottom = 25.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_xou0u")
+theme_override_font_sizes/normal_font_size = 24
+text = "I Think I know what this does"
+scroll_active = false
+
 [node name="Opponent" type="Node" parent="."]
 
 [node name="MyCards" type="Sprite2D" parent="."]
@@ -615,6 +640,7 @@ icon = ExtResource("2_0ct6v")
 flat = true
 
 [node name="Notepad" parent="." instance=ExtResource("6_psgti")]
+z_index = 12
 layout_mode = 1
 offset_top = 480.0
 offset_bottom = 480.00018
