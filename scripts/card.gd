@@ -44,6 +44,7 @@ func deselect_anim() -> void:
 func use() -> void:
 	in_use = true
 	base.use()
+	print(card_name)
 	await base.animation_player.animation_finished
 	await score()
 	

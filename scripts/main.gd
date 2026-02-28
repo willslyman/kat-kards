@@ -3,13 +3,14 @@ class_name Main
 
 @onready var cam_anim: AnimationPlayer = $Camera3D/AnimationPlayer
 @onready var arena: Arena = $Arena
+@onready var opp_sprite: AnimatedSprite3D = $Opp/Sprite3D
 
 func _ready() -> void:
 	randomize()
 	
 	CardList.assign_textures()
-	
 	arena.deal_cards()
+	opp_sprite.play("idle1")
 
 func to_table() -> void:
 	cam_anim.play("to_table")
@@ -17,8 +18,5 @@ func to_table() -> void:
 func from_table() -> void:
 	cam_anim.play_backwards("to_table")
 
-#func _process(delta: float) -> void:
-#	if Input.is_action_just_pressed("ui_accept"):
-#		$Camera3D/AnimationPlayer.play("to_table")
-#	elif Input.is_action_just_pressed("ui_cancel"):
-#		$Camera3D/AnimationPlayer.play_backwards("to_table")
+func _on_arena_hand_completed() -> void:
+	opp_sprite.play("idle" + str(randi_range(1,3)))

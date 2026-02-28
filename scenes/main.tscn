@@ -212,3 +212,5 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3
 light_energy = 5.0
 spot_range = 5.4888763
 spot_angle = 47.702393
+
+[connection signal="hand_completed" from="Arena" to="." method="_on_arena_hand_completed"]

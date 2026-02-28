@@ -43,6 +43,8 @@ var opp_score : int = 0
 var opp_hand_score : int = 0
 var opp_selected_cards : Array[Card] = []
 
+## Signals
+signal hand_completed
 
 func _ready() -> void:
 	main = get_parent()
@@ -188,6 +190,7 @@ func _play_hand() -> void:
 	player_label.text = str(player_score)
 	opp_label.text = str(opp_score)
 	
+	hand_completed.emit()
 	current_cards_selected = 0
 	hand_score_anim.play("hide")
 	main.from_table()
