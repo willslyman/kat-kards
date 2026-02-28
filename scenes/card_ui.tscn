@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=41 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c16ttymnblvrx" path="res://scenes/notepad.tscn" id="6_psgti"]
 [ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="7_8creq"]
 [ext_resource type="Texture2D" uid="uid://jn6w76t47v1t" path="res://textures/notepad_icon.png" id="9_gf8qa"]
+[ext_resource type="PackedScene" uid="uid://oexwr6jftcvm" path="res://scenes/round_end.tscn" id="12_2dr6c"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
 length = 0.001
@@ -742,6 +743,9 @@ offset_bottom = 480.00018
 libraries = {
 &"": SubResource("AnimationLibrary_n7gg6")
 }
+
+[node name="RoundEnd" parent="." instance=ExtResource("12_2dr6c")]
+layout_mode = 1
 
 [connection signal="pressed" from="NotepadButt" to="." method="show_notepad"]
 [connection signal="on_back" from="Notepad" to="." method="hide_notepad"]

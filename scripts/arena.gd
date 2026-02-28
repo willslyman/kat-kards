@@ -19,11 +19,13 @@ var currently_hovered_card : Card = null
 @onready var notepad: Notepad = $Notepad
 @onready var notepad_butt_anim: AnimationPlayer = $NotepadButt/AnimationPlayer
 @onready var round_label: RichTextLabel = $UI/Round/RoundLabel
+@onready var round_end: Control = $RoundEnd
 
 ## Arena State Stuff
 var current_card_play_idx : int = -1
 
-const normal_max_rounds : int = 5
+var max_games : int = 3
+const normal_max_rounds : int = 1
 var current_round : int = 1
 var current_max_rounds : int = normal_max_rounds
 
@@ -61,6 +63,7 @@ signal hand_completed
 
 func _ready() -> void:
 	main = get_parent()
+	round_end.setup(self, 96, Color.WHITE)
 
 func _process(_delta: float) -> void:
 	cursor.position = get_global_mouse_position()
@@ -250,23 +253,20 @@ func _play_hand() -> void:
 	opp_score += opp_hand_score
 	
 	## Update round
+	var is_ending : bool = false
 	if current_round == current_max_rounds:
-		end_current_game()
+		is_ending = true
 	else:
 		current_round += 1
-		
-	## UI updates
-	round_label.text = str(current_round) + "/" + str(current_max_rounds)
-	
-	player_label.text = str(player_score)
-	opp_label.text = str(opp_score)
 	
 	hand_completed.emit()
 	current_cards_selected = 0
 	hand_score_anim.play("hide")
 	main.from_table()
-	score_anim.play("show")
-	card_anim.play("show")
+	if !is_ending:
+		update_ui()
+		score_anim.play("show")
+		card_anim.play("show")
 	player_leads = !player_leads
 	
 	if player_leads:
@@ -276,13 +276,33 @@ func _play_hand() -> void:
 		$UI/Scores/PlayerStar.visible = false
 		$UI/Scores/OppStar.visible = true
 	
-	await card_anim.animation_finished
+	if is_ending:
+		var status : int = await end_current_game()
+		## Player won!
+		if status == 0:
+			return
+		## Player lost...
+		elif status == 1:
+			return
+		
+		update_ui()
+		score_anim.play("show")
+		card_anim.play("show")
+		await card_anim.animation_finished
+	else:
+		await card_anim.animation_finished
 	
 	deal_cards()
 	playing_hand = false
 	show_notepad_butt()
 	player_selected_cards = []
 	opp_selected_cards = []
+
+func update_ui() -> void:
+	## UI updates
+	round_label.text = str(current_round) + "/" + str(current_max_rounds)
+	player_label.text = str(player_score)
+	opp_label.text = str(opp_score)
 
 func opp_select_card() -> void:
 	opp_selecting_card = true
@@ -304,11 +324,14 @@ func opp_select_card() -> void:
 	await tween.finished
 	opp_selecting_card = false
 
-func end_current_game() -> void:
+func end_current_game() -> int:
+	var result : int = await round_end.set_win(player_score > opp_score)
+	
 	current_max_rounds = normal_max_rounds
 	current_round = 1
 	player_score = 0
 	opp_score = 0
+	return result
 
 func do_card(card : Card) -> void:
 	if card.destroyed: return
