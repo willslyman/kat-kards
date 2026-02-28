@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://g5wl5jd84fb7"]
+
+[ext_resource type="PackedScene" uid="uid://ct03lqcjb5p66" path="res://scenes/card_base.tscn" id="1_rmf50"]
+
+[sub_resource type="GDScript" id="GDScript_lkyrt"]
+script/source = "extends Card
+
+# Destroy your opp's first card
+func score() -> void:
+	destroy_other_card()
+"
+
+[node name="Destroy" type="Area2D"]
+script = SubResource("GDScript_lkyrt")
+card_name = "destroy"
+
+[node name="CardBase" parent="." instance=ExtResource("1_rmf50")]

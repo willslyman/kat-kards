@@ -12,6 +12,8 @@ var playing : bool = false
 
 var in_use : bool = false
 
+var destroyed : bool = false
+
 func setup(a : Arena, ip : bool) -> void:
 	arena = a
 	is_player = ip
@@ -57,3 +59,14 @@ func add_points(amt : int) -> void:
 
 func add_mult(mlt : float) -> void:
 	arena.add_mult(is_player, mlt)
+	
+func destroy() -> void:
+	destroyed = true
+	self.visible = false
+
+func destroy_other_card() -> void:
+	if is_player:
+		arena.destroy_opp_card()
+	else: 
+		arena.destroy_player_card()
+	
