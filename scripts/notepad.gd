@@ -8,6 +8,7 @@ signal on_back
 func on_show() -> void:
 	for card in CardList.card_list:
 		if card in CardList.seen_cards:
+		#if true:
 			var cn = CARD_NOTE.instantiate()
 			cn.setup(card)
 			grid.add_child(cn)
