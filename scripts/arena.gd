@@ -9,6 +9,12 @@ var main : Main = null
 const CENTER : Vector2 = Vector2(320, 240)
 var currently_hovered_card : Card = null
 @onready var card_anim: AnimationPlayer = $MyCards/AnimationPlayer
+@onready var play_button: Button = $PlayHand
+@onready var hand_score_anim: AnimationPlayer = $UI/HandScores/AnimationPlayer
+@onready var player_hand_score_anim: AnimationPlayer = $UI/HandScores/PlayerHandScore/AnimationPlayer
+@onready var opp_hand_score_anim: AnimationPlayer = $UI/HandScores/OppHandScore/AnimationPlayer
+@onready var phs_label: RichTextLabel = $UI/HandScores/PlayerHandScore
+@onready var ohs_label: RichTextLabel = $UI/HandScores/OppHandScore
 
 var playing_hand : bool = false
 
@@ -21,6 +27,7 @@ var card_play_size : int = 3
 
 ## Player Stats
 var player_score : int = 0
+var player_hand_score : int = 0
 var player_hand_size : int = 5
 var player_cards : Array[Card] = []
 @onready var player_card_holder: Node2D = $MyCards
@@ -30,6 +37,7 @@ var current_cards_selected : int = 0
 
 ## Opp Stats
 var opp_score : int = 0
+var opp_hand_score : int = 0
 
 
 func _ready() -> void:
@@ -58,7 +66,7 @@ func deal_cards() -> void:
 	for i in player_hand_size:
 		var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
-		var card_pos : Vector2 = Vector2((hand_card_gap * i) - (hand_card_gap * (player_hand_size / 2.0)) + 50, 128)
+		var card_pos : Vector2 = Vector2((hand_card_gap * i) - (hand_card_gap * (player_hand_size / 2.0)) + (hand_card_gap/2.0), 128)
 		player_card_holder.add_child(c)
 		c.position = card_pos
 		c.setup(self, true)
@@ -73,8 +81,22 @@ func deal_cards() -> void:
 
 func _play_hand() -> void:
 	if playing_hand: return
+	
+	## Must play 3 cards
+	var selected : int = 0
+	for i in range(player_cards.size() - 1, -1, -1):
+		var card : Card = player_cards[i]
+		if card.selected:
+			selected += 1
+	if selected != 3:
+		$MyCards/SelectCards/AnimationPlayer.play("angry")
+		return
+	
 	playing_hand = true
 	main.to_table()
+	play_button.hide()
+	player_hand_score = 0
+	opp_hand_score = 0
 	
 	var selected_cards : Array[Card] = []
 	for i in range(player_cards.size() - 1, -1, -1):
@@ -93,7 +115,7 @@ func _play_hand() -> void:
 	selected_cards.reverse()
 	for i in selected_cards.size():
 		var card : Card = selected_cards[i]
-		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (selected_cards.size() / 2.0)) + 50, 0) + CENTER + Vector2(0,64)
+		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,96)
 		
 		card.deselect_anim()
 		
@@ -115,12 +137,14 @@ func _play_hand() -> void:
 	## Show opponent cards
 	for i in range(opp_selected_cards.size()):
 		var card : Card = opp_selected_cards[i]
-		var card_pos : Vector2 = Vector2(320 + (play_card_gap * i) - (play_card_gap * (card_play_size / 2.0)) + 50, 128)
+		var card_pos : Vector2 = Vector2(320 + (play_card_gap * i) - (play_card_gap * (card_play_size / 2.0)) + (play_card_gap/2.0), 160)
 		#card.position = card_pos
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(card, "position", card_pos, 0.5)
-		
+	
+	hand_score_anim.play("show")
 	await get_tree().create_timer(1.0, false).timeout
+	
 	
 	## Score cards
 	
@@ -135,6 +159,9 @@ func _play_hand() -> void:
 			if opp_selected_cards[i].card_name == card_type:
 				var card : Card = opp_selected_cards[i]
 				await do_card(card)
+	
+	## Go Back
+	
 
 func do_card(card : Card) -> void:
 	await card.use()
@@ -143,12 +170,20 @@ func do_card(card : Card) -> void:
 
 func add_points(is_player : bool, amount : int) -> void:
 	if is_player:
-		player_score += amount
+		player_hand_score += amount
+		player_hand_score_anim.play("score")
+		phs_label.text = str(player_hand_score)
 	else:
-		opp_score += amount
+		opp_hand_score += amount
+		opp_hand_score_anim.play("score")
+		ohs_label.text = str(opp_hand_score)
 
 func add_mult(is_player : bool, mlt : int) -> void:
 	if is_player:
-		player_score *= mlt
+		player_hand_score *= mlt
+		player_hand_score_anim.play("score")
+		phs_label.text = str(player_hand_score)
 	else:
-		opp_score *= mlt
+		opp_hand_score *= mlt
+		opp_hand_score_anim.play("score")
+		ohs_label.text = str(opp_hand_score)

@@ -1,10 +1,132 @@
-[gd_scene load_steps=10 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=19 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
 [ext_resource type="Texture2D" uid="uid://c456416aioqvu" path="res://textures/card_holder.png" id="2_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://blptxan683jsi" path="res://textures/play_hand.png" id="3_birkm"]
 [ext_resource type="FontFile" uid="uid://dgqo4kbtb6h2v" path="res://fonts/Stereofidelic.otf" id="3_sofqg"]
+
+[sub_resource type="Animation" id="Animation_xou0u"]
+resource_name = "score"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [0.2617994, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2iqob"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2iqob"]
+_data = {
+&"RESET": SubResource("Animation_2iqob"),
+&"score": SubResource("Animation_xou0u")
+}
+
+[sub_resource type="Animation" id="Animation_8creq"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerHandScore:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, 482), Vector2(0, 410)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OppHandScore:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, -54), Vector2(0, 18)]
+}
+
+[sub_resource type="Animation" id="Animation_gf8qa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerHandScore:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 482)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OppHandScore:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -54)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gf8qa"]
+_data = {
+&"RESET": SubResource("Animation_gf8qa"),
+&"show": SubResource("Animation_8creq")
+}
 
 [sub_resource type="Animation" id="Animation_0ct6v"]
 length = 0.001
@@ -41,6 +163,43 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_0ct6v"),
 &"hide": SubResource("Animation_birkm")
+}
+
+[sub_resource type="Animation" id="Animation_sofqg"]
+resource_name = "angry"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.79999995, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_psgti"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_psgti"]
+_data = {
+&"RESET": SubResource("Animation_psgti"),
+&"angry": SubResource("Animation_sofqg")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5x102"]
@@ -80,6 +239,79 @@ bbcode_enabled = true
 text = "5000"
 scroll_active = false
 
+[node name="HandScores" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerHandScore" type="RichTextLabel" parent="UI/HandScores"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = 242.0
+offset_right = 320.0
+offset_bottom = 293.99963
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(320, 26)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/normal_font = ExtResource("3_sofqg")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "0"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HandScores/PlayerHandScore"]
+libraries = {
+&"": SubResource("AnimationLibrary_2iqob")
+}
+
+[node name="OppHandScore" type="RichTextLabel" parent="UI/HandScores"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -294.0
+offset_right = 320.0
+offset_bottom = -241.99991
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(320, 26)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/normal_font = ExtResource("3_sofqg")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "0"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HandScores/OppHandScore"]
+libraries = {
+&"": SubResource("AnimationLibrary_2iqob")
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HandScores"]
+libraries = {
+&"": SubResource("AnimationLibrary_gf8qa")
+}
+
 [node name="Opponent" type="Node" parent="."]
 
 [node name="MyCards" type="Sprite2D" parent="."]
@@ -89,6 +321,28 @@ texture = ExtResource("2_e1hm3")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MyCards"]
 libraries = {
 &"": SubResource("AnimationLibrary_sofqg")
+}
+
+[node name="SelectCards" type="RichTextLabel" parent="MyCards"]
+self_modulate = Color(1, 0, 0, 0)
+z_index = 10
+offset_left = -194.0
+offset_top = -42.0
+offset_right = 200.0
+offset_bottom = 38.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("3_sofqg")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[shake]Select 3 Cards!!"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MyCards/SelectCards"]
+libraries = {
+&"": SubResource("AnimationLibrary_psgti")
 }
 
 [node name="Cursor" type="Area2D" parent="."]
