@@ -5,6 +5,8 @@ class_name Main
 @onready var arena: Arena = $Arena
 
 func _ready() -> void:
+	randomize()
+	
 	CardList.assign_textures()
 	
 	arena.deal_cards()

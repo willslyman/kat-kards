@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct03lqcjb5p66"]
+[gd_scene load_steps=9 format=3 uid="uid://ct03lqcjb5p66"]
 
 [ext_resource type="Script" uid="uid://72nctvodwunf" path="res://scripts/card_base.gd" id="1_5oewf"]
 [ext_resource type="Texture2D" uid="uid://cqdg55rn1kjfr" path="res://textures/cards/card.png" id="1_pu4ih"]
@@ -19,6 +19,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_kg30u"]
@@ -53,11 +65,28 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -32)]
 }
 
+[sub_resource type="Animation" id="Animation_5oewf"]
+resource_name = "use"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kg30u"]
 _data = {
 &"RESET": SubResource("Animation_ktuci"),
 &"deselect": SubResource("Animation_kg30u"),
-&"select": SubResource("Animation_6u4wf")
+&"select": SubResource("Animation_6u4wf"),
+&"use": SubResource("Animation_5oewf")
 }
 
 [node name="CardBase" type="CollisionShape2D"]
