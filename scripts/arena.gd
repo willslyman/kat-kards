@@ -15,6 +15,7 @@ var currently_hovered_card : Card = null
 @onready var opp_hand_score_anim: AnimationPlayer = $UI/HandScores/OppHandScore/AnimationPlayer
 @onready var phs_label: RichTextLabel = $UI/HandScores/PlayerHandScore
 @onready var ohs_label: RichTextLabel = $UI/HandScores/OppHandScore
+@onready var score_anim: AnimationPlayer = $UI/AnimationPlayer
 
 var playing_hand : bool = false
 
@@ -31,7 +32,8 @@ var player_hand_score : int = 0
 var player_hand_size : int = 5
 var player_cards : Array[Card] = []
 @onready var player_card_holder: Node2D = $MyCards
-@onready var player_label: RichTextLabel = $UI/PlayerLabel
+@onready var player_label: RichTextLabel = $UI/Scores/PlayerLabel
+@onready var opp_label: RichTextLabel = $UI/Scores/OppLabel
 
 var current_cards_selected : int = 0
 var player_selected_cards : Array[Card] = []
@@ -56,9 +58,6 @@ func _process(_delta: float) -> void:
 	
 	if currently_hovered_card:
 		pass
-	
-	## Set scores
-	player_label.text = str(player_score)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
@@ -66,6 +65,10 @@ func _input(event: InputEvent) -> void:
 
 func deal_cards() -> void:
 	for i in player_hand_size:
+		# Skip if card exists
+		if i < player_cards.size() and player_cards[i] != null:
+			continue
+		
 		var card_name = CardList.card_list.keys().pick_random()
 		var c : Card = CardList.card_list[card_name].instantiate()
 		var card_pos : Vector2 = Vector2((hand_card_gap * i) - (hand_card_gap * (player_hand_size / 2.0)) + (hand_card_gap/2.0), 128)
@@ -77,7 +80,10 @@ func deal_cards() -> void:
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(c, "position", card_pos, 0.2)
 		
-		player_cards.append(c)
+		if player_cards.size() <= i:
+			player_cards.append(c)
+		else:
+			player_cards[i] = c
 		
 		await tween.finished
 
@@ -99,13 +105,18 @@ func _play_hand() -> void:
 	play_button.hide()
 	player_hand_score = 0
 	opp_hand_score = 0
+	score_anim.play("hide")
+	player_selected_cards = []
+	opp_selected_cards = []
+	phs_label.text = "0"
+	ohs_label.text = "0"
 	
 	for i in range(player_cards.size() - 1, -1, -1):
 		var card : Card = player_cards[i]
 		if card.selected:
 			card.playing = true
 			var pos : Vector2 = card.global_position
-			player_cards.erase(card)
+			player_cards[i] = null
 			player_card_holder.remove_child(card)
 			add_child(card)
 			card.position = pos
@@ -116,7 +127,7 @@ func _play_hand() -> void:
 	player_selected_cards.reverse()
 	for i in player_selected_cards.size():
 		var card : Card = player_selected_cards[i]
-		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (player_selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,64)
+		var card_pos : Vector2 = Vector2((play_card_gap * i) - (play_card_gap * (player_selected_cards.size() / 2.0)) + (play_card_gap/2.0), 0) + CENTER + Vector2(0,90)
 		
 		card.deselect_anim()
 		
@@ -161,7 +172,31 @@ func _play_hand() -> void:
 				await do_card(card)
 	
 	## Go Back
+	var all_cards : Array[Card] = player_selected_cards + opp_selected_cards
+	for card : Card in all_cards:
+		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE).set_parallel()
+		tween.tween_property(card, "position", Vector2(card.position.x + 640, card.position.y), 0.5)
+		tween.tween_property(card, "rotation_degrees", card.rotation_degrees + randf_range(-80, 80), 0.5)
+		await get_tree().create_timer(0.1, false).timeout
 	
+	for card : Card in all_cards:
+		card.queue_free()
+	
+	## Compute scores
+	player_score += player_hand_score
+	opp_score += opp_hand_score
+	player_label.text = str(player_score)
+	opp_label.text = str(opp_score)
+	
+	current_cards_selected = 0
+	hand_score_anim.play("hide")
+	main.from_table()
+	score_anim.play("show")
+	card_anim.play("show")
+	await card_anim.animation_finished
+	deal_cards()
+	play_button.show()
+	playing_hand = false
 
 func do_card(card : Card) -> void:
 	if card.destroyed: return

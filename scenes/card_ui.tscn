@@ -1,10 +1,37 @@
-[gd_scene load_steps=19 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=25 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
 [ext_resource type="Texture2D" uid="uid://c456416aioqvu" path="res://textures/card_holder.png" id="2_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://blptxan683jsi" path="res://textures/play_hand.png" id="3_birkm"]
 [ext_resource type="FontFile" uid="uid://dgqo4kbtb6h2v" path="res://fonts/Stereofidelic.otf" id="3_sofqg"]
+
+[sub_resource type="Animation" id="Animation_2iqob"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_xou0u"]
 resource_name = "score"
@@ -34,37 +61,37 @@ tracks/1/keys = {
 "values": [0.2617994, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_2iqob"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2iqob"]
+_data = {
+&"RESET": SubResource("Animation_2iqob"),
+&"score": SubResource("Animation_xou0u")
+}
+
+[sub_resource type="Animation" id="Animation_gf8qa"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath("PlayerHandScore:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 482)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
+tracks/1/path = NodePath("OppHandScore:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2iqob"]
-_data = {
-&"RESET": SubResource("Animation_2iqob"),
-&"score": SubResource("Animation_xou0u")
+"values": [Vector2(0, -54)]
 }
 
 [sub_resource type="Animation" id="Animation_8creq"]
@@ -95,8 +122,10 @@ tracks/1/keys = {
 "values": [Vector2(0, -54), Vector2(0, 18)]
 }
 
-[sub_resource type="Animation" id="Animation_gf8qa"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_cgy8f"]
+resource_name = "hide"
+length = 0.5
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -104,10 +133,10 @@ tracks/0/path = NodePath("PlayerHandScore:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 0.2),
 "update": 0,
-"values": [Vector2(0, 482)]
+"values": [Vector2(0, 410), Vector2(0, 482)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -116,16 +145,73 @@ tracks/1/path = NodePath("OppHandScore:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 0.2),
 "update": 0,
-"values": [Vector2(0, -54)]
+"values": [Vector2(0, 18), Vector2(0, -54)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gf8qa"]
 _data = {
 &"RESET": SubResource("Animation_gf8qa"),
+&"hide": SubResource("Animation_cgy8f"),
 &"show": SubResource("Animation_8creq")
+}
+
+[sub_resource type="Animation" id="Animation_2dr6c"]
+resource_name = "show"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scores:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0, -130), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_psiuq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scores:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ti0j5"]
+resource_name = "hide"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scores:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 0.3),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -130)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q75a2"]
+_data = {
+&"RESET": SubResource("Animation_psiuq"),
+&"hide": SubResource("Animation_ti0j5"),
+&"show": SubResource("Animation_2dr6c")
 }
 
 [sub_resource type="Animation" id="Animation_0ct6v"]
@@ -159,10 +245,43 @@ tracks/0/keys = {
 "values": [Vector2(264, 392), Vector2(264, 570)]
 }
 
+[sub_resource type="Animation" id="Animation_q75a2"]
+resource_name = "show"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 0.3),
+"update": 0,
+"values": [Vector2(264, 570), Vector2(264, 392)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sofqg"]
 _data = {
 &"RESET": SubResource("Animation_0ct6v"),
-&"hide": SubResource("Animation_birkm")
+&"hide": SubResource("Animation_birkm"),
+&"show": SubResource("Animation_q75a2")
+}
+
+[sub_resource type="Animation" id="Animation_psgti"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_sofqg"]
@@ -179,21 +298,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_psgti"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_psgti"]
@@ -223,11 +327,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerIcon" type="Sprite2D" parent="UI"]
+[node name="Scores" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerIcon" type="Sprite2D" parent="UI/Scores"]
 position = Vector2(32, 32)
 texture = ExtResource("2_0ct6v")
 
-[node name="PlayerLabel" type="RichTextLabel" parent="UI"]
+[node name="PlayerLabel" type="RichTextLabel" parent="UI/Scores"]
 layout_mode = 0
 offset_left = 62.0
 offset_top = 5.0
@@ -236,7 +348,23 @@ offset_bottom = 57.0
 theme_override_fonts/normal_font = ExtResource("3_sofqg")
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
-text = "5000"
+text = "0"
+scroll_active = false
+
+[node name="OppIcon" type="Sprite2D" parent="UI/Scores"]
+position = Vector2(32, 94)
+texture = ExtResource("2_0ct6v")
+
+[node name="OppLabel" type="RichTextLabel" parent="UI/Scores"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 67.0
+offset_right = 633.0
+offset_bottom = 119.0
+theme_override_fonts/normal_font = ExtResource("3_sofqg")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "0"
 scroll_active = false
 
 [node name="HandScores" type="Control" parent="UI"]
@@ -258,7 +386,7 @@ anchor_bottom = 0.5
 offset_left = -320.0
 offset_top = 242.0
 offset_right = 320.0
-offset_bottom = 293.99963
+offset_bottom = 293.99976
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(320, 26)
@@ -288,7 +416,7 @@ anchor_bottom = 0.5
 offset_left = -320.0
 offset_top = -294.0
 offset_right = 320.0
-offset_bottom = -241.99991
+offset_bottom = -241.99994
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(320, 26)
@@ -310,6 +438,11 @@ libraries = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/HandScores"]
 libraries = {
 &"": SubResource("AnimationLibrary_gf8qa")
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_q75a2")
 }
 
 [node name="Opponent" type="Node" parent="."]

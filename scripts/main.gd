@@ -14,6 +14,9 @@ func _ready() -> void:
 func to_table() -> void:
 	cam_anim.play("to_table")
 
+func from_table() -> void:
+	cam_anim.play_backwards("to_table")
+
 #func _process(delta: float) -> void:
 #	if Input.is_action_just_pressed("ui_accept"):
 #		$Camera3D/AnimationPlayer.play("to_table")
