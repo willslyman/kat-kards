@@ -106,7 +106,7 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 	
 	if event.is_action_pressed("debug"):
-		player_score += 999
+		main.face_next_opponent()
 
 func deal_cards() -> void:
 	round_label.text = str(current_round) + "/" + str(current_max_rounds)
@@ -457,5 +457,6 @@ func new_game() -> void:
 	player_selected_cards = []
 	opp_selected_cards = []
 
-func set_up_round(opp_region_x : int, opp_color : Color) -> void:
+func set_up_round(opp_region_x : int, opp_color : Color, opp : String) -> void:
 	round_end.setup(self, opp_region_x, opp_color)
+	$UI/Scores/OppIcon.texture = load(opp)
