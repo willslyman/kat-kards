@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://cgj07734r0aqj" path="res://materials/Floor.tres" id="2_sugp2"]
 [ext_resource type="Material" uid="uid://da2u6ev51nhea" path="res://materials/Table.tres" id="3_sugp2"]
 [ext_resource type="Environment" uid="uid://bq3xxfi078nbk" path="res://materials/Env.tres" id="4_jyhfs"]
-[ext_resource type="SpriteFrames" uid="uid://bv3c4aq8jy7wr" path="res://textures/opp1.tres" id="7_o6xl0"]
+[ext_resource type="SpriteFrames" uid="uid://bn0hu4wm7a2qh" path="res://textures/opp1.tres" id="7_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://vkwiuul865ox" path="res://textures/tournament_icons/you.png" id="8_tipki"]
 [ext_resource type="Texture2D" uid="uid://cg6wp4d6enkdw" path="res://textures/tournament_back.png" id="8_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dsg6r8qmi0ocs" path="res://textures/tournament_icons/opp1.png" id="9_85g3d"]
@@ -144,47 +144,6 @@ _data = {
 &"bob": SubResource("Animation_85g3d")
 }
 
-[sub_resource type="Animation" id="Animation_ya4ey"]
-resource_name = "to_tournament"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TUI:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TUI:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.3, 1),
-"update": 0,
-"values": [Vector2(640, 0), Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TUI/Back:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 64)]
-}
-
 [sub_resource type="Animation" id="Animation_eb6dy"]
 length = 0.001
 tracks/0/type = "value"
@@ -265,6 +224,47 @@ tracks/2/keys = {
 "values": [Vector2(0, 64), Vector2(-640, 64)]
 }
 
+[sub_resource type="Animation" id="Animation_ya4ey"]
+resource_name = "to_tournament"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TUI:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TUI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(640, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TUI/Back:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 64)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
 _data = {
 &"RESET": SubResource("Animation_eb6dy"),
@@ -330,8 +330,8 @@ transform = Transform3D(1, 0, 1.4210855e-14, 0, 1, 0, -1.4210855e-14, 0, 1, 0, 1
 transform = Transform3D(-1.8, 0, -2.717924e-07, 0, 1.8, 0, 2.717924e-07, 0, -1.8, 0, 0, 0)
 alpha_cut = 1
 texture_filter = 0
-sprite_frames = ExtResource("7_o6xl0")
-animation = &"winning"
+sprite_frames = ExtResource("7_ya4ey")
+animation = &"idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Opp"]
 libraries = {
@@ -352,6 +352,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="TUI" type="Control" parent="Tournament"]
 visible = false
@@ -364,6 +365,7 @@ offset_right = 0.00012207031
 offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Back" type="TextureRect" parent="Tournament/TUI"]
 layout_mode = 0
