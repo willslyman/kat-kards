@@ -26,8 +26,8 @@ var currently_hovered_card : Card = null
 ## Arena State Stuff
 var current_card_play_idx : int = -1
 
-var max_games : int = 1
-const normal_max_rounds : int = 1
+var max_games : int = 3
+const normal_max_rounds : int = 5
 var current_round : int = 1
 var current_max_rounds : int = normal_max_rounds
 
@@ -117,7 +117,7 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 	
 	if event.is_action_pressed("debug"):
-		player_score -= 99
+		player_score += 99
 		#main.face_next_opponent()
 
 func deal_cards() -> void:
