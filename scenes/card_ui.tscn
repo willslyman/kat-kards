@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=50 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
@@ -13,6 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://jn6w76t47v1t" path="res://textures/notepad_icon.png" id="9_gf8qa"]
 [ext_resource type="Texture2D" uid="uid://dowogi70c3wrt" path="res://textures/new_card.png" id="11_psiuq"]
 [ext_resource type="PackedScene" uid="uid://oexwr6jftcvm" path="res://scenes/round_end.tscn" id="12_2dr6c"]
+[ext_resource type="AudioStream" uid="uid://dmdkulijh0iuv" path="res://sound/addscore.ogg" id="14_q75a2"]
+[ext_resource type="AudioStream" uid="uid://0jabvpfjg0du" path="res://sound/subscore.ogg" id="15_c80a1"]
+[ext_resource type="AudioStream" uid="uid://cakr3a7d0ecxd" path="res://sound/card_block.ogg" id="16_c80a1"]
+[ext_resource type="AudioStream" uid="uid://ccid6mwrkfshm" path="res://sound/explode.ogg" id="17_n7gg6"]
+[ext_resource type="AudioStream" uid="uid://bspc4l87fi7yw" path="res://sound/swap.ogg" id="18_ggsc0"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
 length = 0.001
@@ -428,6 +433,21 @@ _data = {
 &"show": SubResource("Animation_s74wq")
 }
 
+[sub_resource type="Animation" id="Animation_2rtkh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_wmb5m"]
 resource_name = "move"
 loop_mode = 1
@@ -443,21 +463,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -4)]
-}
-
-[sub_resource type="Animation" id="Animation_2rtkh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jo3jg"]
@@ -798,6 +803,24 @@ libraries = {
 
 [node name="RoundEnd" parent="." instance=ExtResource("12_2dr6c")]
 layout_mode = 1
+
+[node name="AddScore" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_q75a2")
+
+[node name="SubScore" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_c80a1")
+
+[node name="Block" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_c80a1")
+
+[node name="Destroy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_n7gg6")
+
+[node name="Swap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_ggsc0")
+
+[node name="Fart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_ggsc0")
 
 [connection signal="pressed" from="NotepadButt" to="." method="show_notepad"]
 [connection signal="on_back" from="Notepad" to="." method="hide_notepad"]

@@ -66,6 +66,16 @@ var player_leads : bool = true
 ## Signals
 signal hand_completed
 
+## SFX
+@onready var sfx_add_score: AudioStreamPlayer = $AddScore
+@onready var sfx_sub_score: AudioStreamPlayer = $SubScore
+@onready var sfx_block: AudioStreamPlayer = $Block
+@onready var sfx_swap: AudioStreamPlayer = $Swap
+@onready var sfx_destroy: AudioStreamPlayer = $Destroy
+@onready var sfx_fart: AudioStreamPlayer = $Fart
+
+
+
 func _ready() -> void:
 	main = get_parent()
 	round_end.game_won.connect(main.game_won)
@@ -202,6 +212,8 @@ func _play_hand() -> void:
 		$MyCards/SelectCards/AnimationPlayer.play("angry")
 		return
 	
+	reset_sfx()
+	
 	playing_hand = true
 	main.to_table()
 	player_hand_score = 0
@@ -260,6 +272,7 @@ func _play_hand() -> void:
 				current_card_play_idx = i
 				if second[i].block:
 					card.get_blocked()
+					play_sfx("block")
 					await second[i].use()
 					second[i].un_use()
 					if second[i].card_name not in CardList.seen_cards:
@@ -278,6 +291,7 @@ func _play_hand() -> void:
 				current_card_play_idx = i
 				if first[i].block:
 					card.get_blocked()
+					play_sfx("block")
 					await first[i].use()
 					first[i].un_use()
 					if first[i].card_name not in CardList.seen_cards:
@@ -410,6 +424,7 @@ func do_card(card : Card) -> void:
 		CardList.seen_cards.append(card.card_name)
 	
 	if card.block: return 
+	if card.card_name == "nothing": play_sfx("fart")
 	await card.use()
 	card.un_use()
 	if main.current_game == 0:
@@ -420,6 +435,11 @@ func do_card(card : Card) -> void:
 		await get_tree().create_timer(0.2, false).timeout
 
 func add_points(is_player : bool, amount : int) -> void:
+	if amount >= 0:
+		play_sfx("addscore")
+	else:
+		play_sfx("subscore")
+	
 	if is_player:
 		player_hand_score += amount
 		player_hand_score_anim.play("score")
@@ -431,16 +451,27 @@ func add_points(is_player : bool, amount : int) -> void:
 
 func add_mult(is_player : bool, mlt : int) -> void:
 	if is_player:
+		if player_hand_score >= 0:
+			play_sfx("addscore")
+		else:
+			play_sfx("subscore")
+		
 		player_hand_score *= mlt
 		player_hand_score_anim.play("score")
 		phs_label.text = str(player_hand_score)
 	else:
+		if opp_hand_score >= 0:
+			play_sfx("addscore")
+		else:
+			play_sfx("subscore")
+		
 		opp_hand_score *= mlt
 		opp_hand_score_anim.play("score")
 		ohs_label.text = str(opp_hand_score)
 		
 func destroy_player_card() -> void:
 	var card_idxs = []
+	play_sfx("destroy")
 	for i in range(player_selected_cards.size()):
 		card_idxs.append(i)
 	#card_idxs.shuffle()
@@ -451,6 +482,7 @@ func destroy_player_card() -> void:
 
 func destroy_opp_card() -> void:
 	var card_idxs = []
+	play_sfx("destroy")
 	for i in range(opp_selected_cards.size()):
 		card_idxs.append(i)
 	#card_idxs.shuffle()
@@ -460,6 +492,7 @@ func destroy_opp_card() -> void:
 			return
 
 func swap_cards() -> void: 
+	play_sfx("swap")
 	for i in range(card_play_size):
 		if i != current_card_play_idx:
 			var player_card : Card = player_selected_cards[i]
@@ -510,3 +543,33 @@ func new_game() -> void:
 func set_up_round(opp_region_x : int, opp_color : Color, opp : String) -> void:
 	round_end.setup(self, opp_region_x, opp_color)
 	$UI/Scores/OppIcon.texture = load(opp)
+
+func play_sfx(s : String):
+	sfx_destroy.pitch_scale += 0.05
+	sfx_swap.pitch_scale += 0.05
+	sfx_add_score.pitch_scale += 0.05
+	sfx_sub_score.pitch_scale += 0.05
+	sfx_block.pitch_scale += 0.05
+	sfx_fart.pitch_scale += 0.05
+	
+	match s:
+		"destroy":
+			sfx_destroy.play()
+		"swap":
+			sfx_swap.play()
+		"addscore":
+			sfx_add_score.play()
+		"subscore":
+			sfx_sub_score.play()
+		"block":
+			sfx_block.play()
+		"fart":
+			sfx_fart.play()
+
+func reset_sfx() -> void:
+	sfx_destroy.pitch_scale = 0.95
+	sfx_swap.pitch_scale = 0.95
+	sfx_add_score.pitch_scale = 0.95
+	sfx_sub_score.pitch_scale = 0.95
+	sfx_block.pitch_scale = 0.95
+	sfx_fart.pitch_scale = 0.95
