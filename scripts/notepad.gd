@@ -7,7 +7,12 @@ const CARD_NOTE = preload("uid://b660xuu1r1kl2")
 var open : bool = false
 signal on_back
 
+func hide_no_clue() -> void:
+	$NoClue.visible = false
+
 func on_show() -> void:
+	if CardList.seen_cards.size() > 0:
+		hide_no_clue()
 	open = true
 	for card in CardList.card_list:
 		if card in CardList.seen_cards:
