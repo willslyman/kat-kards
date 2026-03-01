@@ -20,6 +20,8 @@ var currently_hovered_card : Card = null
 @onready var notepad_butt_anim: AnimationPlayer = $NotepadButt/AnimationPlayer
 @onready var round_label: RichTextLabel = $UI/Round/RoundLabel
 @onready var round_end: Control = $RoundEnd
+@onready var new_card_notif: Sprite2D = $NotepadButt/NewCard
+
 
 ## Arena State Stuff
 var current_card_play_idx : int = -1
@@ -247,6 +249,7 @@ func _play_hand() -> void:
 					await second[i].use()
 					second[i].un_use()
 					if second[i].card_name not in CardList.seen_cards:
+						new_card_notif.show()
 						CardList.seen_cards.append(second[i].card_name)
 					await get_tree().create_timer(0.4, false).timeout
 				elif card.block:
@@ -264,6 +267,7 @@ func _play_hand() -> void:
 					await first[i].use()
 					first[i].un_use()
 					if first[i].card_name not in CardList.seen_cards:
+						new_card_notif.show()
 						CardList.seen_cards.append(first[i].card_name)
 					await get_tree().create_timer(0.4, false).timeout
 				elif card.block:
@@ -378,6 +382,7 @@ func end_current_game() -> int:
 func do_card(card : Card) -> void:
 	if card.destroyed: return
 	if card.card_name not in CardList.seen_cards:
+		new_card_notif.show()
 		CardList.seen_cards.append(card.card_name)
 	
 	if card.block: return 
@@ -444,6 +449,7 @@ func swap_cards() -> void:
 func show_notepad() -> void:
 	$Notepad/AnimationPlayer.play("show")
 	notepad.on_show()
+	new_card_notif.hide()
 
 func hide_notepad() -> void:
 	$Notepad/AnimationPlayer.play("hide")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=45 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c16ttymnblvrx" path="res://scenes/notepad.tscn" id="6_psgti"]
 [ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="7_8creq"]
 [ext_resource type="Texture2D" uid="uid://jn6w76t47v1t" path="res://textures/notepad_icon.png" id="9_gf8qa"]
+[ext_resource type="Texture2D" uid="uid://dowogi70c3wrt" path="res://textures/new_card.png" id="11_psiuq"]
 [ext_resource type="PackedScene" uid="uid://oexwr6jftcvm" path="res://scenes/round_end.tscn" id="12_2dr6c"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
@@ -427,6 +428,44 @@ _data = {
 &"show": SubResource("Animation_s74wq")
 }
 
+[sub_resource type="Animation" id="Animation_wmb5m"]
+resource_name = "move"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4)]
+}
+
+[sub_resource type="Animation" id="Animation_2rtkh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jo3jg"]
+_data = {
+&"RESET": SubResource("Animation_2rtkh"),
+&"move": SubResource("Animation_wmb5m")
+}
+
 [sub_resource type="Animation" id="Animation_ecs70"]
 length = 0.001
 tracks/0/type = "value"
@@ -734,6 +773,17 @@ flat = true
 libraries = {
 &"": SubResource("AnimationLibrary_18v6j")
 }
+
+[node name="NewCard" type="Sprite2D" parent="NotepadButt"]
+visible = false
+position = Vector2(80, 16)
+texture = ExtResource("11_psiuq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NotepadButt/NewCard"]
+libraries = {
+&"": SubResource("AnimationLibrary_jo3jg")
+}
+autoplay = "move"
 
 [node name="Notepad" parent="." instance=ExtResource("6_psgti")]
 z_index = 12
