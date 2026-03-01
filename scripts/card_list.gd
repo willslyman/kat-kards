@@ -1,7 +1,7 @@
 extends Node
 
 const categories = ["common", "rare", "legendary"]
-const categorie_weights = [10, 3, 1]
+const categorie_weights = [8, 3, 1]
 
 var rng = null
 

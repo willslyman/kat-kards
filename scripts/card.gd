@@ -77,7 +77,7 @@ func destroy() -> void:
 	
 	# Can't block if destroyed
 	block = false
-	self.visible = false
+	base.destroy()
 
 func destroy_other_card() -> void:
 	if is_player:
