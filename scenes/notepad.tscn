@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c16ttymnblvrx"]
+[gd_scene load_steps=6 format=3 uid="uid://c16ttymnblvrx"]
 
 [ext_resource type="Script" uid="uid://c4kyhpsnhcopk" path="res://scripts/notepad.gd" id="1_fhm5p"]
 [ext_resource type="Texture2D" uid="uid://yqtgc1pydo54" path="res://textures/notepadt.png" id="1_pq6gc"]
 [ext_resource type="Texture2D" uid="uid://bbyigl28w6nuq" path="res://textures/Round_Box.png" id="3_pq6gc"]
 [ext_resource type="Texture2D" uid="uid://bobcnax4p1xi0" path="res://textures/Back.png" id="4_vobun"]
+[ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="5_q2twp"]
 
 [node name="Notepad" type="TextureRect"]
 anchors_preset = 15
@@ -43,5 +44,18 @@ offset_bottom = 470.0
 focus_mode = 0
 icon = ExtResource("4_vobun")
 flat = true
+
+[node name="NoClue" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 172.0
+offset_right = 521.0
+offset_bottom = 281.0
+theme_override_colors/default_color = Color(0.24477637, 0.2447764, 0.24477637, 1)
+theme_override_fonts/normal_font = ExtResource("5_q2twp")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave] I have no clue what's going on yet..."
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
