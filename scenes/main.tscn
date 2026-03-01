@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=70 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -22,9 +22,10 @@
 [ext_resource type="AudioStream" uid="uid://22mbceivc6fj" path="res://sound/card_select_1.ogg" id="20_gqmmt"]
 [ext_resource type="AudioStream" uid="uid://hj4wfd3o06dl" path="res://sound/win.ogg" id="20_og1vs"]
 [ext_resource type="AudioStream" uid="uid://cxnym1jevcvrv" path="res://sound/card_click.ogg" id="21_yc10j"]
-[ext_resource type="AudioStream" uid="uid://p6jo7vm6vj4c" path="res://music/opp1.ogg" id="22_jscy8"]
 [ext_resource type="AudioStream" uid="uid://dkrijwdi8hfmb" path="res://sound/win_game.ogg" id="22_y6deb"]
 [ext_resource type="AudioStream" uid="uid://cn4astoso5ofr" path="res://sound/lose_game.ogg" id="23_og1vs"]
+[ext_resource type="AudioStream" uid="uid://bxpre2oc7c5vw" path="res://sound/menu_amb.ogg" id="26_vxglm"]
+[ext_resource type="AudioStream" uid="uid://bg823xrl8usf1" path="res://sound/door_open.ogg" id="27_2f3dj"]
 
 [sub_resource type="Animation" id="Animation_0ld40"]
 length = 0.001
@@ -344,6 +345,21 @@ _data = {
 &"fan": SubResource("Animation_a8y0u")
 }
 
+[sub_resource type="Animation" id="Animation_5q0nq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_qkpxi"]
 resource_name = "show"
 length = 3.0
@@ -358,21 +374,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_5q0nq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dgi5k"]
@@ -851,7 +852,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-80.0]
+"values": [0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1415,14 +1416,17 @@ volume_db = -3.0
 stream = ExtResource("23_og1vs")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("22_jscy8")
-volume_db = -80.0
+stream = ExtResource("26_vxglm")
+autoplay = true
 bus = &"Music"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Music"]
 libraries = {
 &"": SubResource("AnimationLibrary_2f3dj")
 }
+
+[node name="DoorOpen" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_2f3dj")
 
 [connection signal="hand_completed" from="Arena" to="." method="_on_arena_hand_completed"]
 [connection signal="pressed" from="Menu/Start" to="." method="_on_start_pressed"]

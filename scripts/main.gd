@@ -93,8 +93,6 @@ func face_next_opponent() -> void:
 	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 128), 2.0)
 	await tween.finished
 	
-	await get_tree().create_timer(1.0, false).timeout
-	
 	$Tournament/TUI/StartHint/AnimationPlayer.play("show")
 	can_start_round = true
 	#start_round()
@@ -145,8 +143,10 @@ func _on_start_pressed() -> void:
 	$Menu/BobAnimation.stop()
 	$Menu/AnimationPlayer.play("hide")
 	$Camera3D/AnimationPlayer.play("intro")
+	$Music/AnimationPlayer.play("fade_out")
 
 func set_first_opp() -> void:
+	$DoorOpen.play()
 	$Music.stream = opp_music[current_game]
 	$Music/AnimationPlayer.play("fade_in")
 	$Music.play()
@@ -158,9 +158,8 @@ func set_first_opp() -> void:
 	
 	set_new_opponent()
 	tournament_anim.play("show_bios")
+	await tournament_anim.animation_finished
 	$DirectionalLight3D.queue_free()
-	
-	await get_tree().create_timer(1.0, false).timeout
 	
 	$Tournament/TUI/StartHint/AnimationPlayer.play("show")
 	can_start_round = true
