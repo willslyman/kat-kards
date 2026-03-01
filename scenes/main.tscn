@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=69 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -342,6 +342,43 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_jkv2x"),
 &"fan": SubResource("Animation_a8y0u")
+}
+
+[sub_resource type="Animation" id="Animation_qkpxi"]
+resource_name = "show"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.0333333, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5q0nq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dgi5k"]
+_data = {
+&"RESET": SubResource("Animation_5q0nq"),
+&"show": SubResource("Animation_qkpxi")
 }
 
 [sub_resource type="Animation" id="Animation_eb6dy"]
@@ -1140,9 +1177,9 @@ offset_bottom = 672.0002
 visible = false
 layout_mode = 0
 offset_left = 72.0
-offset_top = 8.0
+offset_top = 12.0
 offset_right = 304.0
-offset_bottom = 176.0
+offset_bottom = 180.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1161,9 +1198,9 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 287.0
-offset_top = 8.0
+offset_top = 12.0
 offset_right = 624.0
-offset_bottom = 183.0
+offset_bottom = 187.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1183,9 +1220,9 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 307.0
-offset_top = 8.0
+offset_top = 12.0
 offset_right = 603.0
-offset_bottom = 180.0
+offset_bottom = 184.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1204,9 +1241,9 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 312.0
-offset_top = 8.0
+offset_top = 12.0
 offset_right = 584.0
-offset_bottom = 176.0
+offset_bottom = 180.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1220,6 +1257,23 @@ The man behind the tournament.
 
 Good luck..."
 horizontal_alignment = 1
+
+[node name="StartHint" type="RichTextLabel" parent="Tournament/TUI"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 528.0
+offset_top = 264.0
+offset_right = 649.0
+offset_bottom = 309.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("15_jkv2x")
+bbcode_enabled = true
+text = "[wave]Click to start..."
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tournament/TUI/StartHint"]
+libraries = {
+&"": SubResource("AnimationLibrary_dgi5k")
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tournament"]
 libraries = {
