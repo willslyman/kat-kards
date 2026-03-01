@@ -33,6 +33,8 @@ var current_max_rounds : int = normal_max_rounds
 
 var playing_hand : bool = false
 
+var current_hover_card : Card = null
+
 ## Visual consts
 const hand_card_gap : int = 100
 const play_card_gap : int = 120
@@ -84,6 +86,7 @@ func _process(_delta: float) -> void:
 				currently_hovered_card = card
 	else:
 		currently_hovered_card = null
+		current_hover_card = null
 	
 	if is_instance_valid(currently_hovered_card):
 		if not playing_hand:
@@ -95,6 +98,9 @@ func _process(_delta: float) -> void:
 		if not is_instance_valid(card): continue
 		
 		if card == currently_hovered_card and !card.selected:
+			if current_hover_card != card:
+				current_hover_card = card
+				main.card_click_sfx()
 			card.hover()
 		else:
 			card.unhover()
@@ -107,6 +113,7 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
 		currently_hovered_card.select()
+		main.card_play_sfx()
 	
 	if event.is_action_pressed("debug"):
 		main.face_next_opponent()
@@ -364,10 +371,15 @@ func opp_select_card() -> void:
 	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	
 	var tween_time = 0.2
+	var extra_wait = false
 	if main.current_game == 0:
 		tween_time = 0.5
+		extra_wait = true
 	tween.tween_property(card, "position", Vector2(64, 96) + Vector2(48 * i, 0), tween_time)
 	
+	if extra_wait:
+		await get_tree().create_timer(0.2, false).timeout 
+	main.card_play_sfx()
 	await tween.finished
 	opp_selecting_card = false
 

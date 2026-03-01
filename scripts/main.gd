@@ -17,6 +17,13 @@ const WALL_3 = preload("uid://x8u7stte1w14")
 
 var current_game : int = 0
 
+var card_play_sfxs = [
+	preload("uid://22mbceivc6fj"),
+	preload("uid://ca3x3aw6gfxdp"),
+	preload("uid://j0o53uh4snoh"),
+	preload("uid://db13lunlggtjp")
+]
+
 func _ready() -> void:
 	randomize()
 	
@@ -121,3 +128,13 @@ func set_first_opp() -> void:
 
 func _restart() -> void:
 	get_tree().reload_current_scene()
+	
+func card_click_sfx() -> void:
+	$CardClick.play()
+
+func card_play_sfx() -> void:
+	#if not $CardSelectOne.playing:
+	var card_sfx = card_play_sfxs.pick_random()
+	$CardPlay.stop()
+	$CardPlay.stream = card_sfx
+	$CardPlay.play()
