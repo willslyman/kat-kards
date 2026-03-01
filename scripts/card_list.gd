@@ -66,6 +66,7 @@ func get_a_card() -> String:
 	return possible.pick_random()
 
 func assign_textures() -> void:
+	seen_cards = []
 	card_textures.shuffle()
 	
 	var i : int = 0
