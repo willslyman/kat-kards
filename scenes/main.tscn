@@ -1348,7 +1348,6 @@ volume_db = -6.0
 
 [node name="CardClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_yc10j")
-volume_db = -3.0
 
 [node name="WinGame" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_y6deb")
