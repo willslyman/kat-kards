@@ -15,12 +15,13 @@ var card_list = {
 	"plus1" : preload("uid://ce855u7bi6ev1"),
 	"plus2" : preload("uid://gfjx2q1emkgw"),
 	"minus2" : preload("uid://bq1hl73ql6uhb"),
-	"times2" : preload("uid://bmtbradsvsyas"), 
 	
 	"minus2other" : preload("uid://dnxsdam1ucx2k"),
 	
 	"plusround" : preload("uid://bk7ova61wxi4v"),
 	"addround" : preload("uid://4gq5f7rcktu7"),
+	
+	"times2" : preload("uid://bmtbradsvsyas"), 
 	
 	"invert" : preload("uid://cmkpfod0jqjbn"),
 }
