@@ -23,8 +23,7 @@ func _ready() -> void:
 	CardList.assign_textures()
 	if debug_info:
 		CardList.debug_set_cardnames()
-	arena.set_up_round(96, Color.WHITE, "res://textures/opp1_ui.png")
-	arena.deal_cards()
+	
 	opp_sprite.play("idle")
 
 func to_table() -> void:
@@ -64,6 +63,8 @@ func face_next_opponent() -> void:
 
 func set_new_opponent() -> void:
 	match current_game:
+		0:
+			arena.set_up_round(96, Color.WHITE, "res://textures/opp1_ui.png")
 		1:
 			$Tournament/TUI/Bios/OppBio1.hide()
 			$Tournament/TUI/Bios/OppBio2.show()
@@ -86,3 +87,26 @@ func set_new_opponent() -> void:
 			$Opp/Sprite3D.sprite_frames = load("res://textures/opp3.tres")
 			opp_sprite.play("idle")
 			arena.set_up_round(192, Color.RED, "res://textures/opp3_ui.png")
+
+
+func _on_start_pressed() -> void:
+	$Menu/AnimationPlayer.play("hide")
+	$Camera3D/AnimationPlayer.play("intro")
+
+func set_first_opp() -> void:
+	tournament_anim.play("to_tournament_first")
+	await tournament_anim.animation_finished
+	$Tournament/TUI/Bios/YouBio.show()
+	$Tournament/TUI/Bios/OppBio1.show()
+	
+	set_new_opponent()
+	tournament_anim.play("show_bios")
+	$DirectionalLight3D.queue_free()
+	
+	await get_tree().create_timer(3.0, false).timeout
+	
+	tournament_anim.play("start_round")
+	$Camera3D/AnimationPlayer.play("doot")
+	await tournament_anim.animation_finished
+	
+	arena.new_game()
