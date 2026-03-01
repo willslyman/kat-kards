@@ -116,6 +116,7 @@ func set_new_opponent() -> void:
 
 
 func _on_start_pressed() -> void:
+	$Menu/BobAnimation.stop()
 	$Menu/AnimationPlayer.play("hide")
 	$Camera3D/AnimationPlayer.play("intro")
 
