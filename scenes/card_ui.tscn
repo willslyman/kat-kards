@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dt3co4u4d2st8"]
+[gd_scene load_steps=52 format=3 uid="uid://dt3co4u4d2st8"]
 
 [ext_resource type="Script" uid="uid://bu0xyl586wpo4" path="res://scripts/arena.gd" id="1_e1hm3"]
 [ext_resource type="Texture2D" uid="uid://ci5o15klbjlxd" path="res://textures/ui_player.png" id="2_0ct6v"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://ccid6mwrkfshm" path="res://sound/explode.ogg" id="17_n7gg6"]
 [ext_resource type="AudioStream" uid="uid://bspc4l87fi7yw" path="res://sound/swap.ogg" id="18_ggsc0"]
 [ext_resource type="AudioStream" uid="uid://batm55idi7ja2" path="res://sound/fart.ogg" id="19_ggsc0"]
+[ext_resource type="AudioStream" uid="uid://25nl1pe0ii1i" path="res://sound/addround.ogg" id="20_hgohx"]
 
 [sub_resource type="Animation" id="Animation_2iqob"]
 length = 0.001
@@ -807,21 +808,30 @@ layout_mode = 1
 
 [node name="AddScore" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_q75a2")
+volume_db = -1.0
 
 [node name="SubScore" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_c80a1")
+volume_db = -1.0
 
 [node name="Block" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_c80a1")
+volume_db = -1.0
 
 [node name="Destroy" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_n7gg6")
+volume_db = -1.0
 
 [node name="Swap" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_ggsc0")
+volume_db = -1.0
 
 [node name="Fart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_ggsc0")
+
+[node name="AddRound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_hgohx")
+volume_db = -1.0
 
 [connection signal="pressed" from="NotepadButt" to="." method="show_notepad"]
 [connection signal="on_back" from="Notepad" to="." method="hide_notepad"]

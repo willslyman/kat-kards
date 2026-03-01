@@ -73,6 +73,7 @@ signal hand_completed
 @onready var sfx_swap: AudioStreamPlayer = $Swap
 @onready var sfx_destroy: AudioStreamPlayer = $Destroy
 @onready var sfx_fart: AudioStreamPlayer = $Fart
+@onready var sfx_add_round: AudioStreamPlayer = $AddRound
 
 const PITCH_INC : float = 0.08
 
@@ -425,6 +426,7 @@ func do_card(card : Card) -> void:
 	
 	if card.block: return 
 	if card.card_name == "nothing": play_sfx("fart")
+	elif card.card_name == "addround": play_sfx("addround")
 	await card.use()
 	card.un_use()
 	if main.current_game == 0:
@@ -452,18 +454,30 @@ func add_points(is_player : bool, amount : int) -> void:
 func add_mult(is_player : bool, mlt : int) -> void:
 	if is_player:
 		if player_hand_score >= 0:
-			play_sfx("addscore")
+			if mlt < 0:
+				play_sfx("subscore")
+			else:
+				play_sfx("addscore")
 		else:
-			play_sfx("subscore")
+			if mlt < 0:
+				play_sfx("addscore")
+			else:
+				play_sfx("subscore")
 		
 		player_hand_score *= mlt
 		player_hand_score_anim.play("score")
 		phs_label.text = str(player_hand_score)
 	else:
 		if opp_hand_score >= 0:
-			play_sfx("addscore")
+			if mlt < 0:
+				play_sfx("subscore")
+			else:
+				play_sfx("addscore")
 		else:
-			play_sfx("subscore")
+			if mlt < 0:
+				play_sfx("addscore")
+			else:
+				play_sfx("subscore")
 		
 		opp_hand_score *= mlt
 		opp_hand_score_anim.play("score")
@@ -565,6 +579,8 @@ func play_sfx(s : String):
 			sfx_block.play()
 		"fart":
 			sfx_fart.play()
+		"addround":
+			sfx_add_round.play()
 
 func reset_sfx() -> void:
 	sfx_destroy.pitch_scale = 1.0 - PITCH_INC
@@ -573,3 +589,4 @@ func reset_sfx() -> void:
 	sfx_sub_score.pitch_scale = 1.0 - PITCH_INC
 	sfx_block.pitch_scale = 1.0 - PITCH_INC
 	sfx_fart.pitch_scale = 1.0 - PITCH_INC
+	sfx_add_round.pitch_scale = 1.0 - PITCH_INC

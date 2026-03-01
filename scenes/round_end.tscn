@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://oexwr6jftcvm"]
+[gd_scene load_steps=18 format=3 uid="uid://oexwr6jftcvm"]
 
 [ext_resource type="Script" uid="uid://da340cs0v6t04" path="res://scripts/round_end.gd" id="1_3c2c2"]
 [ext_resource type="Texture2D" uid="uid://cs5edx00msl7s" path="res://textures/win_bar.png" id="1_naec3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://6hfpwvdng1xf" path="res://textures/well_done.png" id="4_5tybl"]
 [ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="5_clbpt"]
 [ext_resource type="AudioStream" uid="uid://b6kotgngonodk" path="res://sound/win_round.ogg" id="6_6njrm"]
+[ext_resource type="AudioStream" uid="uid://cm2hv2ygjegkk" path="res://sound/lose_round.ogg" id="7_gey14"]
 
 [sub_resource type="Animation" id="Animation_7rbo8"]
 length = 0.001
@@ -281,6 +282,6 @@ flat = true
 stream = ExtResource("6_6njrm")
 
 [node name="RoundLose" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_6njrm")
+stream = ExtResource("7_gey14")
 
 [connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]
