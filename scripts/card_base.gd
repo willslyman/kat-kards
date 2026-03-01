@@ -26,3 +26,6 @@ func un_use() -> void:
 
 func set_texture(texture : Texture2D) -> void:
 	$Sprite2D.texture = texture
+
+func destroy() -> void:
+	$Explosion/AnimationPlayer.play("destroy")
