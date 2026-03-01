@@ -1043,7 +1043,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -480.0
-offset_right = -0.00024414063
+offset_right = -0.00012207031
 offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1134,7 +1134,7 @@ texture = ExtResource("10_choun")
 anchors_preset = 0
 offset_top = 488.0
 offset_right = 640.0
-offset_bottom = 671.9999
+offset_bottom = 672.0002
 
 [node name="YouBio" type="RichTextLabel" parent="Tournament/TUI/Bios"]
 visible = false
@@ -1151,17 +1151,19 @@ theme_override_fonts/normal_font = ExtResource("15_jkv2x")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[wave]Card Cat
+[font size=24]
+Cant play cards.
 
-[font size=24](Can't play cards)"
+\"Whats going on here?\""
 horizontal_alignment = 1
 
 [node name="OppBio1" type="RichTextLabel" parent="Tournament/TUI/Bios"]
 visible = false
 layout_mode = 0
-offset_left = 312.0
+offset_left = 287.0
 offset_top = 8.0
-offset_right = 584.0
-offset_bottom = 176.0
+offset_right = 624.0
+offset_bottom = 183.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1169,19 +1171,21 @@ theme_override_constants/shadow_offset_y = 1
 theme_override_fonts/normal_font = ExtResource("15_jkv2x")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "[wave]Average Tony
-[font size=24]Loses Ties.
+text = "[wave]Timid Tony
+[font size=24]
+Its his first EuKre tournament.
+He is scared of cats.
 
-Has also never played this game before."
+\"I like the Duck card\""
 horizontal_alignment = 1
 
 [node name="OppBio2" type="RichTextLabel" parent="Tournament/TUI/Bios"]
 visible = false
 layout_mode = 0
-offset_left = 312.0
+offset_left = 307.0
 offset_top = 8.0
-offset_right = 584.0
-offset_bottom = 176.0
+offset_right = 603.0
+offset_bottom = 180.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 4
 theme_override_constants/shadow_offset_x = 1
@@ -1191,9 +1195,9 @@ theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[wave]Plasm
 [font size=24]
-A ghost, or, at least that's what we think he is.
+Has been playing EuKre for over 200 years.
 
-Pretty okay at cards."
+\"Boo!\""
 horizontal_alignment = 1
 
 [node name="OppBio3" type="RichTextLabel" parent="Tournament/TUI/Bios"]
