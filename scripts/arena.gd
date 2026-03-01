@@ -113,7 +113,6 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and currently_hovered_card:
 		currently_hovered_card.select()
-		main.card_play_sfx()
 	
 	if event.is_action_pressed("debug"):
 		main.face_next_opponent()
@@ -165,6 +164,7 @@ func deal_cards() -> void:
 		opp_selecting_card = false
 
 func select_card(card : Card) -> void:
+	main.card_play_sfx()
 	var i : int = player_selected_cards.size()
 	player_selected_cards.append(card)
 	card.z_index = i
