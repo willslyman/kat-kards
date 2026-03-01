@@ -117,7 +117,7 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 	
 	if event.is_action_pressed("debug"):
-		player_score += 99
+		player_score -= 99
 		#main.face_next_opponent()
 
 func deal_cards() -> void:

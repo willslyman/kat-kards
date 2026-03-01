@@ -155,6 +155,8 @@ func card_play_sfx() -> void:
 
 func game_won() -> void:
 	$Music/AnimationPlayer.play("fade_out")
+	$WinGame.play()
 
 func game_lost() -> void:
 	$Music/AnimationPlayer.play("game_over")
+	$LoseGame.play()
