@@ -347,7 +347,8 @@ func update_ui() -> void:
 
 func opp_select_card() -> void:
 	opp_selecting_card = true
-	await get_tree().create_timer(0.5, false).timeout
+	if main.current_game == 0:
+		await get_tree().create_timer(0.5, false).timeout
 	
 	#var card_name = CardList.card_list.keys().pick_random()
 	#var card_name : String = CardList.get_a_card()
@@ -361,7 +362,11 @@ func opp_select_card() -> void:
 	opp_selected_cards.append(card)
 	card.z_index = i
 	var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(card, "position", Vector2(64, 96) + Vector2(48 * i, 0), 0.5)
+	
+	var tween_time = 0.2
+	if main.current_game == 0:
+		tween_time = 0.5
+	tween.tween_property(card, "position", Vector2(64, 96) + Vector2(48 * i, 0), tween_time)
 	
 	await tween.finished
 	opp_selecting_card = false
@@ -388,7 +393,12 @@ func do_card(card : Card) -> void:
 	if card.block: return 
 	await card.use()
 	card.un_use()
-	await get_tree().create_timer(0.4, false).timeout
+	if main.current_game == 0:
+		await get_tree().create_timer(0.8, false).timeout
+	elif main.current_game == 1:
+		await get_tree().create_timer(0.4, false).timeout
+	else:
+		await get_tree().create_timer(0.2, false).timeout
 
 func add_points(is_player : bool, amount : int) -> void:
 	if is_player:
