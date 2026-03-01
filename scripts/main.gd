@@ -17,6 +17,8 @@ const WALL_3 = preload("uid://x8u7stte1w14")
 
 var current_game : int = 0
 
+var can_start_round : bool = false
+
 var card_play_sfxs = [
 	preload("uid://22mbceivc6fj"),
 	preload("uid://ca3x3aw6gfxdp"),
@@ -30,6 +32,12 @@ var opp_music = [
 	preload("uid://dgf3diw4mk3ap")
 ]
 
+var player_bio_text = [
+	"[wave]Card Cat\n[font size=24]\nCant play cards.\n\n\"Whats going on here?\"",
+	"[wave]Card Cat\n[font size=24]\nCan kinda play cards.\n\n\"I'm getting the hang of it!\"",
+	"[wave]Card Cat\n[font size=24]\nCard playing master.\n\n\"I'm ready to claim my title!\"",
+]
+
 func _ready() -> void:
 	randomize()
 	
@@ -38,6 +46,10 @@ func _ready() -> void:
 		CardList.debug_set_cardnames()
 	
 	opp_sprite.play("idle")
+	
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("click") and can_start_round:
+		start_round()
 
 func to_table() -> void:
 	cam_anim.play("to_table")
@@ -81,18 +93,28 @@ func face_next_opponent() -> void:
 	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 128), 2.0)
 	await tween.finished
 	
-	await get_tree().create_timer(3.0, false).timeout
+	#await get_tree().create_timer(3.0, false).timeout
 	
+	can_start_round = true
+	#start_round()
+
+
+func start_round() -> void:
+	can_start_round = false
 	tournament_anim.play("start_round")
+	if current_game == 0:
+		$Camera3D/AnimationPlayer.play("doot")
 	await tournament_anim.animation_finished
 	
 	arena.new_game()
+	
 
 func set_new_opponent() -> void:
 	match current_game:
 		0:
 			arena.set_up_round(96, Color.WHITE, "res://textures/opp1_ui.png")
 		1:
+			$Tournament/TUI/Bios/YouBio.text = player_bio_text[1]
 			$Tournament/TUI/Bios/OppBio1.hide()
 			$Tournament/TUI/Bios/OppBio2.show()
 			
@@ -104,6 +126,7 @@ func set_new_opponent() -> void:
 			opp_sprite.play("idle")
 			arena.set_up_round(144, Color.CYAN, "res://textures/opp2_ui.png")
 		2:
+			$Tournament/TUI/Bios/YouBio.text = player_bio_text[2]
 			$Tournament/TUI/Bios/OppBio2.hide()
 			$Tournament/TUI/Bios/OppBio3.show()
 			
@@ -127,6 +150,7 @@ func set_first_opp() -> void:
 	$Music.play()
 	tournament_anim.play("to_tournament_first")
 	await tournament_anim.animation_finished
+	$Tournament/TUI/Bios/YouBio.text = player_bio_text[0]
 	$Tournament/TUI/Bios/YouBio.show()
 	$Tournament/TUI/Bios/OppBio1.show()
 	
@@ -134,13 +158,10 @@ func set_first_opp() -> void:
 	tournament_anim.play("show_bios")
 	$DirectionalLight3D.queue_free()
 	
-	await get_tree().create_timer(3.0, false).timeout
+	#await get_tree().create_timer(3.0, false).timeout
 	
-	tournament_anim.play("start_round")
-	$Camera3D/AnimationPlayer.play("doot")
-	await tournament_anim.animation_finished
-	
-	arena.new_game()
+	can_start_round = true
+	#start_round(true)
 
 func _restart() -> void:
 	get_tree().reload_current_scene()
