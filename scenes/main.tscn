@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=44 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -15,6 +15,46 @@
 [ext_resource type="Texture2D" uid="uid://cnlal2h28a70r" path="res://textures/tournament_icons/opp3.png" id="12_trceg"]
 [ext_resource type="Texture2D" uid="uid://s1k6ktrfeeka" path="res://textures/fan.png" id="14_a8y0u"]
 [ext_resource type="FontFile" uid="uid://bu64c3g4fm4qm" path="res://fonts/Zinterview.ttf" id="15_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://cpc5pyv2l03ml" path="res://textures/menu.png" id="16_jbj1t"]
+[ext_resource type="Texture2D" uid="uid://blnfn4lrrcj8r" path="res://textures/table1.png" id="17_muem4"]
+
+[sub_resource type="Animation" id="Animation_dp3eg"]
+resource_name = "hide"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(106.5, 376), Vector2(106.5, 496)]
+}
+
+[sub_resource type="Animation" id="Animation_0ld40"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(106.5, 376)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gqmmt"]
+_data = {
+&"RESET": SubResource("Animation_0ld40"),
+&"hide": SubResource("Animation_dp3eg")
+}
 
 [sub_resource type="Animation" id="Animation_tipki"]
 length = 0.001
@@ -28,7 +68,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 1.1102806, 2.4705513)]
+"values": [Vector3(0, 0.5, 12.27)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -40,7 +80,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.08637637, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -94,9 +134,83 @@ tracks/2/keys = {
 "values": [Vector3(1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_muem4"]
+resource_name = "intro"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.5, 12.27), Vector3(0, 0.5, 2.471), Vector3(0, 1.1102806, 2.4705513)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6, 0.8000001, 1, 1.2, 1.4, 1.6, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.017453292, 0, 0), Vector3(-0.017453292, 0, 0), Vector3(0.017453292, 0, 0), Vector3(-0.017453292, 0, 0), Vector3(0.017453292, 0, 0), Vector3(-0.017453292, 0, 0), Vector3(0.017453292, 0, 0), Vector3(-0.017453292, 0, 0), Vector3(-0.08726646, 0, 0), Vector3(-0.08637637, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_first_opp"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_yc10j"]
+resource_name = "doot"
+length = 1.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.8),
+"transitions": PackedFloat32Array(0.3, 0.3, 1),
+"update": 0,
+"values": [Vector3(0, 1.1102806, 3.4854279), Vector3(0, 1.1102806, 3.4854279), Vector3(0, 1.1102806, 2.4705513)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.08637637, 0, 0), Vector3(-0.08637637, 0, 0), Vector3(-0.08637637, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_85g3d"]
 _data = {
 &"RESET": SubResource("Animation_tipki"),
+&"doot": SubResource("Animation_yc10j"),
+&"intro": SubResource("Animation_muem4"),
 &"to_table": SubResource("Animation_o6xl0")
 }
 
@@ -248,6 +362,22 @@ tracks/4/keys = {
 "values": [Vector2(0, 488)]
 }
 
+[sub_resource type="Animation" id="Animation_jbj1t"]
+resource_name = "show_bios"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TUI/Bios:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0, 488), Vector2(0, 288)]
+}
+
 [sub_resource type="Animation" id="Animation_trceg"]
 resource_name = "start_round"
 length = 2.0
@@ -354,20 +484,69 @@ tracks/4/keys = {
 "values": [Vector2(0, 488)]
 }
 
-[sub_resource type="Animation" id="Animation_jbj1t"]
-resource_name = "show_bios"
+[sub_resource type="Animation" id="Animation_gqmmt"]
+resource_name = "to_tournament_first"
+length = 0.5
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TUI/Bios:position")
+tracks/0/path = NodePath("TUI:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TUI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TUI/Back:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 64)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TUI:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.3, 1),
 "update": 0,
-"values": [Vector2(0, 488), Vector2(0, 288)]
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TUI/Bios:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 488)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
@@ -375,8 +554,22 @@ _data = {
 &"RESET": SubResource("Animation_eb6dy"),
 &"show_bios": SubResource("Animation_jbj1t"),
 &"start_round": SubResource("Animation_trceg"),
-&"to_tournament": SubResource("Animation_ya4ey")
+&"to_tournament": SubResource("Animation_ya4ey"),
+&"to_tournament_first": SubResource("Animation_gqmmt")
 }
+
+[sub_resource type="BoxMesh" id="BoxMesh_muem4"]
+size = Vector3(20, 20, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3eg"]
+albedo_texture = ExtResource("16_jbj1t")
+uv1_scale = Vector3(3.01, 2.04, 2.04)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ld40"]
+albedo_texture = ExtResource("17_muem4")
+uv1_scale = Vector3(40, 40, 40)
+texture_filter = 0
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_tefeu")
@@ -384,8 +577,43 @@ debug_info = true
 
 [node name="Arena" parent="." instance=ExtResource("1_tbgi4")]
 
+[node name="Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Start" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.5
+offset_top = 136.0
+offset_right = 213.5
+offset_bottom = 209.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0, 1)
+theme_override_fonts/font = ExtResource("15_jkv2x")
+theme_override_font_sizes/font_size = 48
+text = "Enter the Tournament!"
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Menu"]
+libraries = {
+&"": SubResource("AnimationLibrary_gqmmt")
+}
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9962719, 0.086269, 0, -0.086269, 0.9962719, 0, 1.1102806, 2.4705513)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 12.27)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D"]
 libraries = {
@@ -475,11 +703,13 @@ mouse_filter = 2
 
 [node name="TUI" type="Control" parent="Tournament"]
 visible = false
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -480.0
+offset_right = -0.00024414063
 offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -573,6 +803,7 @@ offset_right = 640.0
 offset_bottom = 671.9999
 
 [node name="YouBio" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+visible = false
 layout_mode = 0
 offset_left = 72.0
 offset_top = 8.0
@@ -591,6 +822,7 @@ text = "[wave]Card Cat
 horizontal_alignment = 1
 
 [node name="OppBio1" type="RichTextLabel" parent="Tournament/TUI/Bios"]
+visible = false
 layout_mode = 0
 offset_left = 312.0
 offset_top = 8.0
@@ -656,4 +888,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_eb6dy")
 }
 
+[node name="StoreWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7376347, 2.9402332)
+mesh = SubResource("BoxMesh_muem4")
+surface_material_override/0 = SubResource("StandardMaterial3D_dp3eg")
+
+[node name="Grass" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -2.2623653, 11.940233)
+mesh = SubResource("BoxMesh_muem4")
+surface_material_override/0 = SubResource("StandardMaterial3D_0ld40")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8660254, 0.4330127, 0.25, -0.5, 0.75, 0.4330127, 0, -0.5, 0.8660254, 0, 0, 0)
+
 [connection signal="hand_completed" from="Arena" to="." method="_on_arena_hand_completed"]
+[connection signal="pressed" from="Menu/Start" to="." method="_on_start_pressed"]

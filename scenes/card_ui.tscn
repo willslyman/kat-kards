@@ -177,7 +177,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -194)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -189,7 +189,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -194)]
 }
 
 [sub_resource type="Animation" id="Animation_ti0j5"]
@@ -269,7 +269,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(264, 392)]
+"values": [Vector2(264, 570)]
 }
 
 [sub_resource type="Animation" id="Animation_birkm"]
@@ -358,13 +358,13 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(528, 312)]
+"values": [Vector2(648, 312)]
 }
 
 [sub_resource type="Animation" id="Animation_18v6j"]
@@ -506,8 +506,9 @@ grow_vertical = 2
 
 [node name="Round" type="Control" parent="UI"]
 anchors_preset = 0
+offset_top = -194.0
 offset_right = 640.0
-offset_bottom = 131.0
+offset_bottom = -63.0
 
 [node name="RoundIcon" type="Sprite2D" parent="UI/Round"]
 position = Vector2(536, 34)
@@ -531,6 +532,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -194.0
+offset_bottom = -194.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -681,7 +684,7 @@ scroll_active = false
 [node name="Opponent" type="Node" parent="."]
 
 [node name="MyCards" type="Sprite2D" parent="."]
-position = Vector2(264, 392)
+position = Vector2(264, 570)
 texture = ExtResource("2_e1hm3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MyCards"]
@@ -719,9 +722,9 @@ debug_color = Color(0.978924, 0, 0.3960697, 0.41960785)
 
 [node name="NotepadButt" type="Button" parent="."]
 layout_mode = 0
-offset_left = 528.0
+offset_left = 648.0
 offset_top = 312.0
-offset_right = 632.0
+offset_right = 752.0
 offset_bottom = 448.0
 focus_mode = 0
 icon = ExtResource("9_gf8qa")
@@ -731,7 +734,6 @@ flat = true
 libraries = {
 &"": SubResource("AnimationLibrary_18v6j")
 }
-autoplay = "move"
 
 [node name="Notepad" parent="." instance=ExtResource("6_psgti")]
 z_index = 12
