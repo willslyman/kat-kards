@@ -93,13 +93,15 @@ func face_next_opponent() -> void:
 	tween.tween_property(t_opps, "position", Vector2(t_opps.position.x, t_opps.position.y + 128), 2.0)
 	await tween.finished
 	
-	#await get_tree().create_timer(3.0, false).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	
+	$Tournament/TUI/StartHint/AnimationPlayer.play("show")
 	can_start_round = true
 	#start_round()
 
 
 func start_round() -> void:
+	$Tournament/TUI/StartHint/AnimationPlayer.stop()
 	can_start_round = false
 	tournament_anim.play("start_round")
 	if current_game == 0:
@@ -158,8 +160,9 @@ func set_first_opp() -> void:
 	tournament_anim.play("show_bios")
 	$DirectionalLight3D.queue_free()
 	
-	#await get_tree().create_timer(3.0, false).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	
+	$Tournament/TUI/StartHint/AnimationPlayer.play("show")
 	can_start_round = true
 	#start_round(true)
 
