@@ -74,6 +74,9 @@ func current_round() -> int:
 	
 func destroy() -> void:
 	destroyed = true
+	
+	# Can't block if destroyed
+	block = false
 	self.visible = false
 
 func destroy_other_card() -> void:

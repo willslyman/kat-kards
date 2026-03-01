@@ -26,7 +26,7 @@ func basic_ai(opphandcards) -> Card:
 		return opphandcards.pick_random()
 
 
-func pick_card(level, opphandcards, oppcardsplayed, playercardsplayed, is_player_first, round) -> Card:
+func pick_card(level, opphandcards, oppcardsplayed, playercardsplayed, is_player_first, round, max_round, opp_score, player_score) -> Card:
 	if false:
 		print("ai thoughts")
 		print("opp cards")
@@ -50,6 +50,7 @@ func pick_card(level, opphandcards, oppcardsplayed, playercardsplayed, is_player
 	else:
 		# get some info about setup
 		var has_invert_or_swap = false
+		var add_round = null
 		var block = null
 		var destroy = null
 		
@@ -62,7 +63,14 @@ func pick_card(level, opphandcards, oppcardsplayed, playercardsplayed, is_player
 				block = c
 			elif c.card_name == "destroy":
 				destroy = c
-				
+			elif c.card_name == "addround":
+				add_round = c
+		
+		## If loseing by more then 3 and its the last round, play add round
+		if player_score - opp_score >= 3 and round == max_round:
+			if add_round != null:
+				return add_round
+		
 		## Block swap and invert if can
 		if is_player_first and \
 			(playercardsplayed.back().card_name == "invert" or playercardsplayed.back().card_name == "swap"):

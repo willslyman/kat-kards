@@ -352,7 +352,7 @@ func opp_select_card() -> void:
 	
 	#var card_name = CardList.card_list.keys().pick_random()
 	#var card_name : String = CardList.get_a_card()
-	var card : Card = Ai.pick_card(main.current_game, opp_cards, opp_selected_cards, player_selected_cards, player_leads, current_round)
+	var card : Card = Ai.pick_card(main.current_game, opp_cards, opp_selected_cards, player_selected_cards, player_leads, current_round, current_max_rounds, opp_score, player_score)
 	#var card : Card = Ai.pick_card(1, opp_cards, opp_selected_cards, player_selected_cards, player_leads)
 	opp_cards.erase(card)
 	#card.position = Vector2(64,-32)
