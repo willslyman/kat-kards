@@ -14,6 +14,8 @@ var midway : float = 0.0
 var opp_color : Color = Color.WHITE
 
 @onready var texture_rect: TextureRect = $TextureRect
+signal game_won
+signal game_lost
 
 func setup(a : Arena, opp_region : int = 96, opp_col : Color = Color.RED) -> void:
 	arena = a
@@ -59,10 +61,12 @@ func set_win(is_player : bool) -> int:
 	var status : int = -1
 	if player_wins > midway:
 		status = 0
+		game_won.emit()
 		$AnimationPlayer.play("gameover")
 		$Win.play("win")
 	elif opp_wins > midway:
 		status = 1
+		game_lost.emit()
 		$AnimationPlayer.play("gameover")
 		$Win.play("lose")
 	else:

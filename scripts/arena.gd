@@ -26,8 +26,8 @@ var currently_hovered_card : Card = null
 ## Arena State Stuff
 var current_card_play_idx : int = -1
 
-var max_games : int = 3
-const normal_max_rounds : int = 5
+var max_games : int = 1
+const normal_max_rounds : int = 1
 var current_round : int = 1
 var current_max_rounds : int = normal_max_rounds
 
@@ -68,6 +68,8 @@ signal hand_completed
 
 func _ready() -> void:
 	main = get_parent()
+	round_end.game_won.connect(main.game_won)
+	round_end.game_lost.connect(main.game_lost)
 
 func _process(_delta: float) -> void:
 	cursor.position = get_global_mouse_position()
@@ -115,7 +117,8 @@ func _input(event: InputEvent) -> void:
 		currently_hovered_card.select()
 	
 	if event.is_action_pressed("debug"):
-		main.face_next_opponent()
+		player_score += 99
+		#main.face_next_opponent()
 
 func deal_cards() -> void:
 	round_label.text = str(current_round) + "/" + str(current_max_rounds)

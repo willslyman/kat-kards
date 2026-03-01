@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=60 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://blnfn4lrrcj8r" path="res://textures/table1.png" id="17_muem4"]
 [ext_resource type="AudioStream" uid="uid://22mbceivc6fj" path="res://sound/card_select_1.ogg" id="20_gqmmt"]
 [ext_resource type="AudioStream" uid="uid://cxnym1jevcvrv" path="res://sound/card_click.ogg" id="21_yc10j"]
+[ext_resource type="AudioStream" uid="uid://p6jo7vm6vj4c" path="res://music/opp1.ogg" id="22_jscy8"]
 
 [sub_resource type="Animation" id="Animation_0ld40"]
 length = 0.001
@@ -761,6 +762,104 @@ _data = {
 &"win": SubResource("Animation_y6deb")
 }
 
+[sub_resource type="Animation" id="Animation_vxglm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:pitch_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_2wyq8"]
+resource_name = "fade_in"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.32153195, 1),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2f3dj"]
+resource_name = "fade_out"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1.7569019, 0.3105794),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="Animation" id="Animation_yq6so"]
+resource_name = "game_over"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:pitch_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.01]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1.7569019, 0.3105794),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2f3dj"]
+_data = {
+&"RESET": SubResource("Animation_vxglm"),
+&"fade_in": SubResource("Animation_2wyq8"),
+&"fade_out": SubResource("Animation_2f3dj"),
+&"game_over": SubResource("Animation_yq6so")
+}
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_tefeu")
 
@@ -1200,6 +1299,16 @@ volume_db = -6.0
 [node name="CardClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_yc10j")
 volume_db = -3.0
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_jscy8")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Music"]
+libraries = {
+&"": SubResource("AnimationLibrary_2f3dj")
+}
 
 [connection signal="hand_completed" from="Arena" to="." method="_on_arena_hand_completed"]
 [connection signal="pressed" from="Menu/Start" to="." method="_on_start_pressed"]

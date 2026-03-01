@@ -24,6 +24,12 @@ var card_play_sfxs = [
 	preload("uid://db13lunlggtjp")
 ]
 
+var opp_music = [
+	preload("uid://p6jo7vm6vj4c"),
+	preload("uid://7ia8b2i7nswl"),
+	preload("uid://dgf3diw4mk3ap")
+]
+
 func _ready() -> void:
 	randomize()
 	
@@ -57,6 +63,11 @@ func face_next_opponent() -> void:
 		return
 	
 	tournament_anim.play("to_tournament")
+	
+	$Music.stream = opp_music[current_game+1]
+	$Music/AnimationPlayer.play("fade_in")
+	$Music.play()
+	
 	await tournament_anim.animation_finished
 	arena.reset()
 	
@@ -109,6 +120,9 @@ func _on_start_pressed() -> void:
 	$Camera3D/AnimationPlayer.play("intro")
 
 func set_first_opp() -> void:
+	$Music.stream = opp_music[current_game]
+	$Music/AnimationPlayer.play("fade_in")
+	$Music.play()
 	tournament_anim.play("to_tournament_first")
 	await tournament_anim.animation_finished
 	$Tournament/TUI/Bios/YouBio.show()
@@ -138,3 +152,9 @@ func card_play_sfx() -> void:
 	$CardPlay.stop()
 	$CardPlay.stream = card_sfx
 	$CardPlay.play()
+
+func game_won() -> void:
+	$Music/AnimationPlayer.play("fade_out")
+
+func game_lost() -> void:
+	$Music/AnimationPlayer.play("game_over")
