@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://d1t3eql6ynoai"]
+[gd_scene load_steps=63 format=3 uid="uid://d1t3eql6ynoai"]
 
 [ext_resource type="Material" uid="uid://cptfod75wnyrg" path="res://materials/Wall.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dt3co4u4d2st8" path="res://scenes/card_ui.tscn" id="1_tbgi4"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cyskiqhcbd1l8" path="res://textures/win_bg.png" id="17_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://blnfn4lrrcj8r" path="res://textures/table1.png" id="17_muem4"]
 [ext_resource type="AudioStream" uid="uid://22mbceivc6fj" path="res://sound/card_select_1.ogg" id="20_gqmmt"]
+[ext_resource type="AudioStream" uid="uid://hj4wfd3o06dl" path="res://sound/win.ogg" id="20_og1vs"]
 [ext_resource type="AudioStream" uid="uid://cxnym1jevcvrv" path="res://sound/card_click.ogg" id="21_yc10j"]
 [ext_resource type="AudioStream" uid="uid://p6jo7vm6vj4c" path="res://music/opp1.ogg" id="22_jscy8"]
 [ext_resource type="AudioStream" uid="uid://dkrijwdi8hfmb" path="res://sound/win_game.ogg" id="22_y6deb"]
@@ -1293,6 +1294,9 @@ theme_override_fonts/font = ExtResource("15_jkv2x")
 theme_override_font_sizes/font_size = 32
 text = "Menu"
 flat = true
+
+[node name="WinSFX" type="AudioStreamPlayer" parent="Win"]
+stream = ExtResource("20_og1vs")
 
 [node name="CardPlay" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_gqmmt")

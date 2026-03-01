@@ -57,6 +57,7 @@ func face_next_opponent() -> void:
 	# win!
 	if current_game == 2:
 		$Win/AnimationPlayer.play("win")
+		$Win/WinSFX.play()
 		await get_tree().create_timer(0.5, false).timeout
 		arena.queue_free()
 		

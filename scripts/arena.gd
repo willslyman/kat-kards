@@ -119,6 +119,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug"):
 		player_score += 99
 		#main.face_next_opponent()
+	
+	if event.is_action_pressed("debug2"):
+		#player_score += 99
+		main.face_next_opponent()
 
 func deal_cards() -> void:
 	round_label.text = str(current_round) + "/" + str(current_max_rounds)
