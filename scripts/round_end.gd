@@ -53,8 +53,10 @@ func set_win(is_player : bool) -> int:
 	game_num += 1
 	if is_player:
 		player_wins += 1
+		$RoundWin.play()
 		await w.set_win(48) # player
 	else:
+		$RoundLose.play()
 		opp_wins += 1
 		await w.set_win(opp_reg)
 	

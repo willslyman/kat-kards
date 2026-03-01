@@ -20,8 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://cyskiqhcbd1l8" path="res://textures/win_bg.png" id="17_gqmmt"]
 [ext_resource type="Texture2D" uid="uid://blnfn4lrrcj8r" path="res://textures/table1.png" id="17_muem4"]
 [ext_resource type="AudioStream" uid="uid://22mbceivc6fj" path="res://sound/card_select_1.ogg" id="20_gqmmt"]
+[ext_resource type="AudioStream" uid="uid://hj4wfd3o06dl" path="res://sound/win.ogg" id="20_og1vs"]
 [ext_resource type="AudioStream" uid="uid://cxnym1jevcvrv" path="res://sound/card_click.ogg" id="21_yc10j"]
 [ext_resource type="AudioStream" uid="uid://p6jo7vm6vj4c" path="res://music/opp1.ogg" id="22_jscy8"]
+[ext_resource type="AudioStream" uid="uid://dkrijwdi8hfmb" path="res://sound/win_game.ogg" id="22_y6deb"]
+[ext_resource type="AudioStream" uid="uid://cn4astoso5ofr" path="res://sound/lose_game.ogg" id="23_og1vs"]
 
 [sub_resource type="Animation" id="Animation_0ld40"]
 length = 0.001
@@ -1336,6 +1339,9 @@ theme_override_font_sizes/font_size = 32
 text = "Menu"
 flat = true
 
+[node name="WinSFX" type="AudioStreamPlayer" parent="Win"]
+stream = ExtResource("20_og1vs")
+
 [node name="CardPlay" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_gqmmt")
 volume_db = -6.0
@@ -1343,6 +1349,13 @@ volume_db = -6.0
 [node name="CardClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_yc10j")
 volume_db = -3.0
+
+[node name="WinGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_y6deb")
+volume_db = -3.0
+
+[node name="LoseGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_og1vs")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_jscy8")

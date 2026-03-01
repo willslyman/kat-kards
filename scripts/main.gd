@@ -57,6 +57,7 @@ func face_next_opponent() -> void:
 	# win!
 	if current_game == 2:
 		$Win/AnimationPlayer.play("win")
+		$Win/WinSFX.play()
 		await get_tree().create_timer(0.5, false).timeout
 		arena.queue_free()
 		
@@ -156,6 +157,8 @@ func card_play_sfx() -> void:
 
 func game_won() -> void:
 	$Music/AnimationPlayer.play("fade_out")
+	$WinGame.play()
 
 func game_lost() -> void:
 	$Music/AnimationPlayer.play("game_over")
+	$LoseGame.play()
