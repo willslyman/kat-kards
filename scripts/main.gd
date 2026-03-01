@@ -41,6 +41,14 @@ func _on_arena_hand_completed() -> void:
 		opp_sprite.play("idle")
 
 func face_next_opponent() -> void:
+	# win!
+	if current_game == 2:
+		$Win/AnimationPlayer.play("win")
+		await get_tree().create_timer(0.5, false).timeout
+		arena.queue_free()
+		
+		return
+	
 	tournament_anim.play("to_tournament")
 	await tournament_anim.animation_finished
 	arena.reset()
@@ -110,3 +118,6 @@ func set_first_opp() -> void:
 	await tournament_anim.animation_finished
 	
 	arena.new_game()
+
+func _restart() -> void:
+	get_tree().reload_current_scene()

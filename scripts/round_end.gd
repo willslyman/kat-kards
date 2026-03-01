@@ -71,6 +71,9 @@ func set_win(is_player : bool) -> int:
 	
 	await $AnimationPlayer.animation_finished
 	
+	if status == 1:
+		$Menu.show()
+	
 	return status
 
 func reset() -> void:
@@ -79,3 +82,6 @@ func reset() -> void:
 		token.queue_free()
 	
 	tokens = []
+
+func _on_menu_pressed() -> void:
+	arena.main._restart()
