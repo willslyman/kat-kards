@@ -74,7 +74,7 @@ signal hand_completed
 @onready var sfx_destroy: AudioStreamPlayer = $Destroy
 @onready var sfx_fart: AudioStreamPlayer = $Fart
 
-
+const PITCH_INC : float = 0.08
 
 func _ready() -> void:
 	main = get_parent()
@@ -545,12 +545,12 @@ func set_up_round(opp_region_x : int, opp_color : Color, opp : String) -> void:
 	$UI/Scores/OppIcon.texture = load(opp)
 
 func play_sfx(s : String):
-	sfx_destroy.pitch_scale += 0.05
-	sfx_swap.pitch_scale += 0.05
-	sfx_add_score.pitch_scale += 0.05
-	sfx_sub_score.pitch_scale += 0.05
-	sfx_block.pitch_scale += 0.05
-	sfx_fart.pitch_scale += 0.05
+	sfx_destroy.pitch_scale += PITCH_INC
+	sfx_swap.pitch_scale += PITCH_INC
+	sfx_add_score.pitch_scale += PITCH_INC
+	sfx_sub_score.pitch_scale += PITCH_INC
+	sfx_block.pitch_scale += PITCH_INC
+	sfx_fart.pitch_scale += PITCH_INC
 	
 	match s:
 		"destroy":
@@ -567,9 +567,9 @@ func play_sfx(s : String):
 			sfx_fart.play()
 
 func reset_sfx() -> void:
-	sfx_destroy.pitch_scale = 0.95
-	sfx_swap.pitch_scale = 0.95
-	sfx_add_score.pitch_scale = 0.95
-	sfx_sub_score.pitch_scale = 0.95
-	sfx_block.pitch_scale = 0.95
-	sfx_fart.pitch_scale = 0.95
+	sfx_destroy.pitch_scale = 1.0 - PITCH_INC
+	sfx_swap.pitch_scale = 1.0 - PITCH_INC
+	sfx_add_score.pitch_scale = 1.0 - PITCH_INC
+	sfx_sub_score.pitch_scale = 1.0 - PITCH_INC
+	sfx_block.pitch_scale = 1.0 - PITCH_INC
+	sfx_fart.pitch_scale = 1.0 - PITCH_INC
